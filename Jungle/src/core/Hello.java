@@ -1,8 +1,14 @@
 package core;
 
+import ui.WindowController;
+
 public class Hello {
 
 	public static void main(String[] args) {
-		System.out.println("Hello");
+		
+		WindowController controller = new WindowController();
+		controller.centerWindow();
+		controller.run();
+		
 	}
 }
