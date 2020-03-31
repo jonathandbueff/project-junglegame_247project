@@ -1,21 +1,27 @@
 package ui;
 
 import static org.lwjgl.glfw.GLFW.*;
+import core.*;
 
 public class WindowController {
+	
+	public static WindowController current;
 	
 	public static String NAME = "Jungle";
 	public static int DEFAULT_WIDTH = 640;
 	public static int DEFAULT_HEIGHT = 480;
 	
 	private Window window;
+	private GameLoop loop; 
 	
 	public WindowController() {
 		window = createNewWindow(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+		current = this;
 	}
 	
 	public WindowController(int width, int height) {
 		window = createNewWindow(width,height);
+		current = this;
 	}
 	
 	Window createNewWindow(int width, int height) {
@@ -44,15 +50,22 @@ public class WindowController {
 	}
 	
 	public void run() {
+		
 		glfwShowWindow(window.getID());
 		
+		loop = new CoreLoop();
+		loop.start();
 		while(!glfwWindowShouldClose(window.getID())) {
+			loop.update();
 			glfwPollEvents();
 		}
 		
 		glfwTerminate();
 	}
 	
+	public void setLoop(GameLoop loop) {
+		this.loop = loop;
+	}
 	
 	public Window getWindow() {
 		return this.window;
