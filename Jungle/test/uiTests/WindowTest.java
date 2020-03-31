@@ -28,7 +28,6 @@ class WindowTest {
 	@Test
 	void testCenter() {
 		controller.centerWindow();
-		//controller.run();
 		int heightCenter = MonitorInfo.HEIGHT/2;
 		int widthCenter = MonitorInfo.WIDTH/2;
 		int[] xpos = {0};
@@ -36,10 +35,8 @@ class WindowTest {
 		glfwGetWindowPos(window.getID(), xpos, ypos);
 		int windowWidthCenter = xpos[0] + (window.getWidth()/2) ;
 		int windowHeightCenter = ypos[0] + (window.getHeight()/2);
-		//Assert.assertTrue("Not Horizontally Centered", Math.abs(windowWidthCenter - widthCenter)<=1);
 		Assert.assertEquals(widthCenter, windowWidthCenter);
 		Assert.assertEquals(heightCenter, windowHeightCenter);
-		//Assert.assertTrue("Not Vertically Centered", Math.abs(windowHeightCenter - heightCenter)<=1);
 	}
 	
 }

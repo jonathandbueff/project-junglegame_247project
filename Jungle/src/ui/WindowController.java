@@ -33,6 +33,10 @@ public class WindowController {
 		return new Window(window, width, height);
 	}
 	
+	
+	/**
+	 * Place the current window at the center of the screen
+	 */
 	public void centerWindow() {
 		int widthPosition = (MonitorInfo.WIDTH - window.getWidth()) / 2;
 		int heightPosition = (MonitorInfo.HEIGHT - window.getHeight()) / 2;
