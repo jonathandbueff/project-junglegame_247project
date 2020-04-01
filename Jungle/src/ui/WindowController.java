@@ -8,8 +8,8 @@ public class WindowController {
 	public static WindowController current;
 	
 	public static String NAME = "Jungle";
-	public static int DEFAULT_WIDTH = 640;
-	public static int DEFAULT_HEIGHT = 480;
+	public static final int DEFAULT_WIDTH = 640;
+	public static final int DEFAULT_HEIGHT = 480;
 	
 	private Window window;
 	private GameLoop loop; 
