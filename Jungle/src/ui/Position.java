@@ -32,6 +32,10 @@ public class Position {
 		return y < other.getY();
 	}
 	
+	public Position add(Position other) {
+		return new Position(x+other.getX(), y+other.getY());
+	}
+	
 	public boolean equals(Position other) {
 		return x == other.getX() && y == other.getY();
 	}
