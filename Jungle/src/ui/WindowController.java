@@ -1,6 +1,8 @@
 package ui;
 
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL11.*;
+import org.lwjgl.opengl.GL;
 import core.*;
 
 public class WindowController {
@@ -8,8 +10,8 @@ public class WindowController {
 	public static WindowController current;
 	
 	public static String NAME = "Jungle";
-	public static final int DEFAULT_WIDTH = 640;
-	public static final int DEFAULT_HEIGHT = 480;
+	public static final int DEFAULT_WIDTH = 1280;
+	public static final int DEFAULT_HEIGHT = 800;
 	
 	private Window window;
 	private GameLoop loop; 
@@ -51,13 +53,23 @@ public class WindowController {
 	
 	public void run() {
 		
-		glfwShowWindow(window.getID());
+		long winId = window.getID();
+		
+		glfwShowWindow(winId);
+		glfwMakeContextCurrent(winId);
+		GL.createCapabilities();
+		
+		glEnable(GL_TEXTURE_2D);
 		
 		loop = new CoreLoop();
 		loop.start();
+		
 		while(!glfwWindowShouldClose(window.getID())) {
+			
 			loop.update();
+			
 			glfwPollEvents();
+			glfwSwapBuffers(winId);
 		}
 		
 		glfwTerminate();

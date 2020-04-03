@@ -1,6 +1,7 @@
 package core;
 
-import coreTests.ClickTestLoop;
+
+import coreTests.*;
 
 public class CoreLoop implements GameLoop {
 	
@@ -15,7 +16,7 @@ public class CoreLoop implements GameLoop {
 	@Override
 	public void start() {
 		// TODO Initialize default runningLoop;
-		runningLoop = new ClickTestLoop();
+		runningLoop = new TextureTestLoop();
 		runningLoop.start();
 	}
 

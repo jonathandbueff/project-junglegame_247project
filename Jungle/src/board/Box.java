@@ -10,7 +10,7 @@ public class Box implements Clickable {
 	Position position;
 	BoxType type;
 	
-	//Texture
+	//Animal animal
 	
 	public Box(Position pos) {
 		position = pos;
