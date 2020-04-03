@@ -21,6 +21,8 @@ public class Texture {
 	private int width;
 	private int height;
 	
+	private final int colorLength = 4;  //color is 4 bytes
+	
 	public Texture(String fileName) {
 		BufferedImage image;
 		try {
@@ -28,30 +30,16 @@ public class Texture {
 			width = image.getWidth();
 			height = image.getHeight();
 			
-			
 			int[] rawPixels = image.getRGB(0, 0, width, height, null, 0, width);
+			ByteBuffer pixels = rawToBytes(rawPixels);
 			
-			ByteBuffer pixels = BufferUtils.createByteBuffer(width * height * 4);
-			
-			for(int w = 0; w < width; w++) {
-				for(int h = 0; h < height; h++) {
-					int pixel = rawPixels[w*width + h];
-					pixels.put((byte)((pixel>>16) & 0xFF));  //R
-					pixels.put((byte)((pixel>>8) & 0xFF));   //G
-					pixels.put((byte)(pixel & 0xFF));        //B
-					pixels.put((byte)((pixel>>24) & 0xFF));  //A
-				}
-			}
-			pixels.flip();
-			
-			id = glGenTextures();
+			id = glGenTextures();  //grab an id from gl
 			
 			bind();
 			
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			setGlTexParameters();
 			
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+			setPixelsToImage(pixels);
 			
 		}
 		catch(IOException e) {
@@ -64,8 +52,8 @@ public class Texture {
 	}
 	
 	public void renderAt(Position pos) {
-		RelativePosition topLeft = GlobalToRelative(pos);
-		RelativePosition bottomRight = GlobalToRelative(pos.add(new Position(width,height)));
+		RelativePosition topLeft = RelativePosition.globalToRelative(pos);
+		RelativePosition bottomRight = RelativePosition.globalToRelative(pos.add(new Position(width,height)));
 
 		bind();
 		glBegin(GL_QUADS);
@@ -79,17 +67,7 @@ public class Texture {
 			glVertex2f(bottomRight.x, topLeft.y);
 		glEnd();
 	}
-	
-	private RelativePosition GlobalToRelative(Position global) {
-		Window window = WindowController.current.getWindow();
-		int halfWidth = window.getWidth()/2;
-		int halfHeight = window.getHeight()/2;
-		float xpos = ((float)(global.getX()-halfWidth))/halfWidth;
-		float ypos = ((float)(halfHeight-global.getY()))/halfHeight;
-		return new RelativePosition(xpos,ypos);
-	}
-	
-	
+		
 	public static Texture getEmpty() {
 		return new Texture(BoxType.NORMAL.getUrl());
 	}
@@ -104,13 +82,33 @@ public class Texture {
 		throw new IllegalStateException("Not Implemented");
 	}
 	
-	private class RelativePosition {
-		float x;
-		float y;
+	
+	
+	/*******Helpers*******/
+	
+	private ByteBuffer rawToBytes(int[] rawPixels) {		
+		ByteBuffer pixels = BufferUtils.createByteBuffer(width * height * colorLength);
 		
-		RelativePosition(float xpos, float ypos){
-			x = xpos;
-			y = ypos;
+		for(int w = 0; w < width; w++) {
+			for(int h = 0; h < height; h++) {
+				int pixel = rawPixels[w*width + h];
+				pixels.put((byte)((pixel>>16) & 0xFF));  //R
+				pixels.put((byte)((pixel>>8) & 0xFF));   //G
+				pixels.put((byte)(pixel & 0xFF));        //B
+				pixels.put((byte)((pixel>>24) & 0xFF));  //A
+			}
 		}
+		pixels.flip();
+		return pixels;
 	}
+	
+	private void setGlTexParameters() {
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	}
+	
+	private void setPixelsToImage(ByteBuffer pixels) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+	}
+	
 }
