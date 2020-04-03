@@ -60,26 +60,27 @@ public class GameBoard {
 		}
 		return false;
 	}
-	
-	private boolean canEat(int x, int y) {
+
+    private boolean canEat(int x, int y) {
         Box nextPiece = board[x][y];
-        if (nextPiece.getAnimal() != null) {
-        	Animal next = nextPiece.getAnimal();
-        	if (isTrap(x, y)) {
-        		return true;
-        	}
-        	return current.isSuperiorTo(next) >= 0;
+        if (nextPiece.getAnimal() != null && nextPiece.getAnimal().getSide() != turn) {
+            Animal next = nextPiece.getAnimal();
+            if (isTrap(x, y)) {
+                return true;
+            }
+            return current.isSuperiorTo(next) >= 0;
         }
         return false;
     }
-	
-	private boolean isTrap(int x, int y) {
+
+    private boolean isTrap(int x, int y) {
         if (turn == 0) {
             return board[x][y].getKind() == Landscape.trap1;
         } else {
             return board[x][y].getKind() == Landscape.trap2;
         }
     }
+
 	
 	public boolean move(int x, int y) {
 		if (canMoveTo(x,y) && canEat(x, y)) {
@@ -140,4 +141,13 @@ public class GameBoard {
 		if (board[x][y].getKind() == Landscape.den1 || board[x][y].getKind() == Landscape.den2) return true;
 		return false;
 	}
+
+    private boolean updateBoard(int x, int y) {
+        board[current_x][current_y].setAnimal(null);
+        board[x][y].setAnimal(current);
+        current = null;
+        if (board[x][y].getKind() == Landscape.den1 || board[x][y].getKind() == Landscape.den2) return true;
+        return false;
+    }
+
 }

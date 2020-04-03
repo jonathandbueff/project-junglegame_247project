@@ -5,6 +5,7 @@ import board.Enumerations.GameState;
 public class GameController {
 	private static GameState state;
 	private static GameBoard game;
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		game = new GameBoard();
@@ -46,5 +47,9 @@ public class GameController {
 			state = GameState.select;
 			run();
 		}
+	}
+
+	public void win(){
+		
 	}
 }
