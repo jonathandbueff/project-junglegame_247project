@@ -15,7 +15,9 @@ public class Enumerations {
 	enum Landscape {
 		land,
 		water,
-		trap,
-		den
+		trap1,
+		trap2,
+		den1,
+		den2
 	}
 }
