@@ -9,9 +9,11 @@ public class GameBoard {
 	private Animal current;
 	private int current_x;
 	private int current_y;
+	private int target_x;
+	private int target_y;
 	
 	public GameBoard() {
-		this.turn = 1;
+		this.turn = 0;
 		board = new Box[7][9];
 		for (int i = 0; i < board.length; i++) {
 			for (int j = 0; j < board[i].length; j++) {
@@ -36,15 +38,26 @@ public class GameBoard {
 		}
 	}
 	
-	private boolean selectAnimal(int x, int y) {
+	// need an event listener for mouse click
+	// assume can sense
+	
+	public boolean selectAnimal(int x, int y) {
 		Box box = board[x][y];
-		if (box.getAnimal() != null && box.getAnimal().getSide() == this.turn) {
-			current = box.getAnimal();
+		if (canSelect(x, y)) {
+			current = board[x][y].getAnimal();
 			current_x = x;
 			current_y = y;
 			return true;
 		}
 		current = null;
+		return false;
+	}
+	
+	public boolean canSelect(int x, int y) {
+		Box box = board[x][y];
+		if (box.getAnimal() != null && box.getAnimal().getSide() == this.turn) {
+			return true;
+		}
 		return false;
 	}
 	
@@ -68,7 +81,7 @@ public class GameBoard {
         }
     }
 	
-	private boolean move(int x, int y) {
+	public boolean move(int x, int y) {
 		if (canMoveTo(x,y) && canEat(x, y)) {
 			return true;
 		}
@@ -81,10 +94,10 @@ public class GameBoard {
 		if (x < 0 || x >= 9 || y < 0 || y >= 7) return false;
 		if (current_x != x && current_y != y) return false;
 		if (current_x == x && current_y == y) return false;
-		if (target_box.getKind() == Landscape.den1 && current.getSide() == 1) {
+		if (target_box.getKind() == Landscape.den1 && current.getSide() == 0) {
 			return false;
 		}
-		if (target_box.getKind() == Landscape.den2 && current.getSide() == 2) {
+		if (target_box.getKind() == Landscape.den2 && current.getSide() == 1) {
 			return false;
 		}
 		if (current.getRank() == Rank.mouse) {
@@ -117,10 +130,13 @@ public class GameBoard {
 		return true;
 	}
 	
-	private boolean updateBoard(int x, int y) {
+	public boolean updateBoard() {
 		board[current_x][current_y].setAnimal(null);
+		int x = target_x;
+		int y = target_y;
 		board[x][y].setAnimal(current);
 		current = null;
+		turn = 1 - turn;
 		if (board[x][y].getKind() == Landscape.den1 || board[x][y].getKind() == Landscape.den2) return true;
 		return false;
 	}

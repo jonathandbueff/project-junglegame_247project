@@ -20,4 +20,11 @@ public class Enumerations {
 		den1,
 		den2
 	}
+	
+	enum GameState {
+		initial,
+		select,
+		move,
+		update
+	}
 }
