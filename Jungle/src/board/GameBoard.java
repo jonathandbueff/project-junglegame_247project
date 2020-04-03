@@ -43,7 +43,7 @@ public class GameBoard {
 	
 	public boolean selectAnimal(int x, int y) {
 		Box box = board[x][y];
-		if (canSelect(x, y)) {
+		if (canSelect(x, y)) { 
 			current = board[x][y].getAnimal();
 			current_x = x;
 			current_y = y;
