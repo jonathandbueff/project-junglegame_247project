@@ -47,7 +47,7 @@ public class GameBoard {
 			current = board[x][y].getAnimal();
 			current_x = x;
 			current_y = y;
-			return true;
+			return true; 
 		}
 		current = null;
 		return false;
