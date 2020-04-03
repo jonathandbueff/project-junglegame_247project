@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import org.lwjgl.BufferUtils;
 
 import board.Animal;
+import board.BoxType;
 
 public class Texture {
 	
@@ -54,7 +55,7 @@ public class Texture {
 			
 		}
 		catch(IOException e) {
-			throw new IllegalStateException("File does not exist");
+			throw new IllegalStateException("File at " + fileName + " does not exist");
 		}
 	}
 	
@@ -90,13 +91,17 @@ public class Texture {
 	
 	
 	public static Texture getEmpty() {
-		//TODO
-		return null;
+		return new Texture(BoxType.NORMAL.getUrl());
 	}
 	
-	public static Texture getTextureOf(Animal animal) {
+	public static Texture getTextureOfBox(BoxType type) {
+		String url = type.getUrl();
+		return new Texture(url);
+	}
+	
+	public static Texture getTextureOfAnimal(Animal animal) {
 		//TODO
-		return null;
+		throw new IllegalStateException("Not Implemented");
 	}
 	
 	private class RelativePosition {
