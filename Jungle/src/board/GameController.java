@@ -23,7 +23,7 @@ public class GameController {
 		if (state == GameState.select) {
 			int x = 0;
 			int y = 0;
-			if (game.selectAnimal(x, y)) {
+			if (game.selectAnimal(x, y)) { 
 				state = GameState.move;
 				run();
 			}
