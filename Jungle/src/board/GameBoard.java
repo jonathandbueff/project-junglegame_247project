@@ -42,7 +42,6 @@ public class GameBoard {
 	// assume can sense
 	
 	public boolean selectAnimal(int x, int y) {
-		Box box = board[x][y];
 		if (canSelect(x, y)) { 
 			current = board[x][y].getAnimal();
 			current_x = x;
@@ -141,13 +140,4 @@ public class GameBoard {
 		if (board[x][y].getKind() == Landscape.den1 || board[x][y].getKind() == Landscape.den2) return true;
 		return false;
 	}
-
-    private boolean updateBoard(int x, int y) {
-        board[current_x][current_y].setAnimal(null);
-        board[x][y].setAnimal(current);
-        current = null;
-        if (board[x][y].getKind() == Landscape.den1 || board[x][y].getKind() == Landscape.den2) return true;
-        return false;
-    }
-
 }
