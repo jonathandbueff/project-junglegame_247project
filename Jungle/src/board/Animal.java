@@ -1,16 +1,22 @@
 package board;
 
 import board.Enumerations.Rank;
+import ui.Position;
+import ui.Texture;
+import ui.TextureDictionary;
 
 public class Animal {
 	private Rank rank;
 	private Box box;
 	private int side;
 	
+	private Texture texture;
+	
 	public Animal(Rank rank, int side) {
 		this.rank = rank;
 		//this.box = box;
 		this.side = side;
+		texture = TextureDictionary.getAnimalTexture(rank);
 	}
 	
 	public int isSuperiorTo(Animal other) {
@@ -18,6 +24,18 @@ public class Animal {
 		if (this.rank == Rank.elephant && other.rank == Rank.mouse) return -1;
 		if (this.rank == other.rank) return 0;
 		return (this.rank.compareTo(other.rank) > 0) ? 1 : -1;
+	}
+	
+	public void renderAt(Position position) {
+		texture.renderAt(position);
+	}
+	
+	public Position centerTo(Position boxPosition) {
+		int width = texture.getWidth();
+		int height = texture.getHeight();
+		int widthCenter = (Box.Length - width)/2;
+		int heightCenter = (Box.Length - height)/2;
+		return boxPosition.add(widthCenter, heightCenter);
 	}
 	
 	public Rank getRank() {

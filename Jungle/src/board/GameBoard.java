@@ -30,8 +30,7 @@ public class GameBoard {
 		board = new Box[NumRow][NumCol];	
 		for (int i = 0; i < board.length; i++) {
 			for (int j = 0; j < board[i].length; j++) {
-				Position offset = new Position(j*Box.Length,i*Box.Length);
-				Position boxPosition = pos.add(offset);
+				Position boxPosition = pos.add(j*Box.Length,i*Box.Length);
 				board[i][j] = new Box(Landscape.land, boxPosition);
 			}
 		}
@@ -83,6 +82,32 @@ public class GameBoard {
 				board[i][j] = new Box(Landscape.water);
 			}
 		}
+	}
+	
+	private void initAnimalsDefault() {
+		board[0][2].setAnimal(new Animal(Rank.elephant,0));
+		board[2][2].setAnimal(new Animal(Rank.wolf,0));
+		board[4][2].setAnimal(new Animal(Rank.leopard,0));
+		board[6][2].setAnimal(new Animal(Rank.mouse,0));
+		board[1][1].setAnimal(new Animal(Rank.cat,0));
+		board[5][1].setAnimal(new Animal(Rank.dog,0));
+		board[0][0].setAnimal(new Animal(Rank.tiger,0));
+		board[6][0].setAnimal(new Animal(Rank.lion,0));
+				
+		board[6][6].setAnimal(new Animal(Rank.elephant,1));
+		board[4][6].setAnimal(new Animal(Rank.wolf,1));
+		board[2][6].setAnimal(new Animal(Rank.leopard,1));
+		board[0][6].setAnimal(new Animal(Rank.mouse,1));
+		board[5][7].setAnimal(new Animal(Rank.cat,1));
+		board[1][7].setAnimal(new Animal(Rank.dog,1));
+		board[6][8].setAnimal(new Animal(Rank.tiger,1));
+		board[0][8].setAnimal(new Animal(Rank.lion,1));
+	}
+	
+	public static GameBoard createBoardDefault(Position pos) {
+		GameBoard newBoard = new GameBoard(pos);
+		newBoard.initAnimalsDefault();
+		return newBoard;
 	}
 	
 

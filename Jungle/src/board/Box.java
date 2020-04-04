@@ -28,6 +28,10 @@ public class Box implements Clickable{
 	
 	public void render() {
 		texture.renderAt(position);
+		if(animal!=null) {
+			Position center = animal.centerTo(position);
+			animal.renderAt(center);
+		}
 	}
 	
 	public Landscape getKind() {
