@@ -24,4 +24,13 @@ public class BoardRenderer {
 			}
 		}	
 	}
+	
+	public static void renderBoard(GameBoard board) {
+		Box[][] boxes = board.getBoxes();
+		for(Box[] row : boxes) {
+			for(Box box : row) {
+				box.render();
+			}
+		}	
+	}
 }

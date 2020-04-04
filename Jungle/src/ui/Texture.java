@@ -30,8 +30,6 @@ public class Texture {
 			width = image.getWidth();
 			height = image.getHeight();
 			
-			System.out.println(width + "," + height);
-			
 			int[] rawPixels = image.getRGB(0, 0, width, height, null, 0, width);
 			ByteBuffer pixels = rawToBytes(rawPixels);
 			

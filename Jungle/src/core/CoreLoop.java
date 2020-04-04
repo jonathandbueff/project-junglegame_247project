@@ -16,7 +16,7 @@ public class CoreLoop implements GameLoop {
 	@Override
 	public void start() {
 		// TODO Initialize default runningLoop;
-		runningLoop = new TextureTestLoop();
+		runningLoop = new NormalLoop();
 		runningLoop.start();
 	}
 
