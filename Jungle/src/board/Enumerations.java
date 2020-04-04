@@ -1,7 +1,7 @@
 package board;
 
 public class Enumerations {
-	enum Rank {
+	public enum Rank {
 		mouse,
 		cat,
 		dog,
@@ -12,7 +12,7 @@ public class Enumerations {
 		elephant
 	}
 	
-	enum Landscape {
+	public enum Landscape {
 		land,
 		water,
 		trap1,
@@ -21,7 +21,7 @@ public class Enumerations {
 		den2
 	}
 	
-	enum GameState {
+	public enum GameState {
 		initial,
 		select,
 		move,
