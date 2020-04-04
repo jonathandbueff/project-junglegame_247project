@@ -1,6 +1,9 @@
 package board;
 
 import ui.Position;
+import board.Enumerations.Landscape;
+import board.Enumerations.Rank;
+
 
 public class GameBoard {
 	
@@ -11,10 +14,45 @@ public class GameBoard {
 	private Box[][] boxes;
 	
 	
+	private Box[][] board;
+	private int turn;
+	private Animal current;
+	private int current_x;
+	private int current_y;
+	private int target_x;
+	private int target_y;
+	
+	
 	public GameBoard(Position pos) {
 		position = pos;
 		boxes = new Box[NumRow][NumCol];	
 		//TODO: create and aligned boxes
+	}
+	
+	public GameBoard() {
+		this.turn = 0;
+		board = new Box[7][9];
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board[i].length; j++) {
+				board[i][j] = new Box(Landscape.land);
+			}
+		}
+		board[0][3] = new Box(Landscape.den1);
+		board[8][3] = new Box(Landscape.den2);
+		board[0][2] = new Box(Landscape.trap1);
+		board[0][4] = new Box(Landscape.trap1);
+		board[1][3] = new Box(Landscape.trap1);
+		board[8][2] = new Box(Landscape.trap2);
+		board[8][4] = new Box(Landscape.trap2);
+		board[7][3] = new Box(Landscape.trap2);
+		for (int i = 3; i <= 5; i++) {
+			for (int j = 1; j <= 2; j++) {
+				board[i][j] = new Box(Landscape.water);
+			}
+			for (int j = 4; j <= 5; j++) {
+				board[i][j] = new Box(Landscape.water);
+			}
+		}
 	}
 	
 	public void render() {
@@ -55,4 +93,113 @@ public class GameBoard {
 	public Position getPosition() {
 		return position;
 	}
+
+	
+	
+	
+	// need an event listener for mouse click
+	// assume can sense
+	
+	public boolean selectAnimal(int x, int y) {
+		if (canSelect(x, y)) { 
+			current = board[x][y].getAnimal();
+			current_x = x;
+			current_y = y;
+			return true; 
+		}
+		current = null;
+		return false;
+	}
+	
+	public boolean canSelect(int x, int y) {
+		Box box = board[x][y];
+		if (box.getAnimal() != null && box.getAnimal().getSide() == this.turn) {
+			return true;
+		}
+		return false;
+	}
+
+    private boolean canEat(int x, int y) {
+        Box nextPiece = board[x][y];
+        if (nextPiece.getAnimal() != null && nextPiece.getAnimal().getSide() != turn) {
+            Animal next = nextPiece.getAnimal();
+            if (isTrap(x, y)) {
+                return true;
+            }
+            return current.isSuperiorTo(next) >= 0;
+        }
+        return false;
+    }
+
+    private boolean isTrap(int x, int y) {
+        if (turn == 0) {
+            return board[x][y].getKind() == Landscape.trap1;
+        } else {
+            return board[x][y].getKind() == Landscape.trap2;
+        }
+    }
+
+	
+	public boolean move(int x, int y) {
+		if (canMoveTo(x,y) && canEat(x, y)) {
+			return true;
+		}
+		return false;
+	}
+	
+	
+	//TODO: cleaner
+	private boolean canMoveTo(int x, int y) {
+		Box current_box = board[current_x][current_y];
+		Box target_box = board[x][y];
+		if (x < 0 || x >= 9 || y < 0 || y >= 7) return false;
+		if (current_x != x && current_y != y) return false;
+		if (current_x == x && current_y == y) return false;
+		if (target_box.getKind() == Landscape.den1 && current.getSide() == 0) {
+			return false;
+		}
+		if (target_box.getKind() == Landscape.den2 && current.getSide() == 1) {
+			return false;
+		}
+		if (current.getRank() == Rank.mouse) {
+			if (Math.abs(current_x + current_y - x - y) != 1) return false;
+			if (target_box.getKind() == Landscape.water) return true;
+			else {
+				if (current_box.getKind() == Landscape.water && target_box.getAnimal() != null) return false;
+				return true;
+			}
+		}
+		if (target_box.getKind() == Landscape.water) return false;
+		if (current.getRank() == Rank.tiger || current.getRank() == Rank.lion) {
+			if (Math.abs(current_x + current_y - x - y) == 1) return true;
+			if (current_x == x) {
+				for (int i = Math.min(current_y, y) + 1; i < Math.max(current_y, y); i++) {
+					if (board[x][i].getKind() != Landscape.water) return false;
+					if (board[x][i].getAnimal() != null) return false;
+				}
+				return true;
+			}
+			if (current_y == y) {
+				for (int i = Math.min(current_x, x) + 1; i < Math.max(current_x, x); i++) {
+					if (board[i][y].getKind() != Landscape.water) return false;
+					if (board[i][y].getAnimal() != null) return false;
+				}
+				return true;
+			}
+		}
+		if (Math.abs(current_x + current_y - x - y) != 1) return false;
+		return true;
+	}
+	
+	public boolean updateBoard() {
+		board[current_x][current_y].setAnimal(null);
+		int x = target_x;
+		int y = target_y;
+		board[x][y].setAnimal(current);
+		current = null;
+		turn = 1 - turn;
+		if (board[x][y].getKind() == Landscape.den1 || board[x][y].getKind() == Landscape.den2) return true;
+		return false;
+	}
+	
 }

@@ -1,25 +1,34 @@
 package board;
 
+
+import board.Enumerations.Landscape;
 import ui.Clickable;
 import ui.Position;
 
-public class Box implements Clickable {
+public class Box implements Clickable{
+	private Landscape landscape; // land, water, trap, den
+	private Animal animal; // could be null
 	
-	public static final int Length = 10;
-		
 	private Position position;
-	private BoxType type;
 	
-	//Animal animal
-	
-	public Box(Position pos) {
-		position = pos;
-		type = BoxType.NORMAL;
+	public Box(Landscape landscape) {
+		this.landscape = landscape;
 	}
 	
-	public Box(Position pos, BoxType type) {
-		this.position = pos;
-		this.type = type;
+	public Landscape getKind() {
+		return this.landscape;
+	}
+	
+	public Animal getAnimal() {
+		return this.animal;
+	}
+	
+	public void setAnimal(Animal animal) {
+		this.animal = animal;
+	}
+	
+	public Position getPosition() {
+		return position;
 	}
 
 	@Override
@@ -28,18 +37,4 @@ public class Box implements Clickable {
 		
 	}
 	
-	public Position getPosition() {
-		return position;
-	}
-	
-	public void setBoxType(BoxType type) {
-		this.type = type;
-	}
-	
-	public BoxType getBoxType() {
-		return type;
-	}
-	
-	
-
 }
