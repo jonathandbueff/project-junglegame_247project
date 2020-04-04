@@ -11,6 +11,7 @@ import org.lwjgl.opengl.GL;
 import board.Box;
 import board.BoxType;
 import core.*;
+import ui.BackgroundRenderer;
 import ui.BoardRenderer;
 import ui.Position;
 import ui.Texture;
@@ -32,7 +33,7 @@ public class TextureTestLoop implements GameLoop {
 		boxNormal = new Box(new Position(200,200), BoxType.NORMAL);
 		boxDen = new Box(new Position(400,200), BoxType.DEN);
 		boxWater = new Box(new Position(800,200), BoxType.WATER);
-		boxTrap = new Box(new Position(1000,200), BoxType.TRAP);
+		boxTrap = new Box(new Position(1000,200), BoxType.TRAP);	
 		boxList.add(boxNormal);
 		boxList.add(boxDen);
 		boxList.add(boxWater);
@@ -42,7 +43,8 @@ public class TextureTestLoop implements GameLoop {
 	}
 
 	@Override
-	public void update() {			
+	public void update() {
+		// BackgroundRenderer.renderBackground();
 		BoardRenderer.renderBoard(boxList);
 	}
 

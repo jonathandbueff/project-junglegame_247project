@@ -64,7 +64,7 @@ public class WindowController {
 		loop = new CoreLoop();
 		loop.start();
 		
-		while(!glfwWindowShouldClose(window.getID())) {
+		while(!glfwWindowShouldClose(winId)) {
 			
 			loop.update();
 			

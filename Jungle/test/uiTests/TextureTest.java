@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import board.BoxType;
-import ui.TextureLocation;
 
 class TextureTest {
 
