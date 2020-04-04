@@ -1,6 +1,9 @@
 package core;
 
 
+import java.util.LinkedList;
+import java.util.List;
+
 import board.Box;
 import board.GameBoard;
 import ui.BoardRenderer;
@@ -14,11 +17,17 @@ public class NormalLoop implements GameLoop {
 	GameBoard board;
 	Window window;
 
+	
 	@Override
 	public void start() {
 		board = GameBoard.createBoardDefault(new Position(80,35));
 		
 		window = WindowController.current.getWindow();
+		
+		
+		board.getBox(1, 1).markAsAvailable(true);
+		board.getBox(1, 1).markAsAvailable(false);
+		
 	}
 
 	@Override
@@ -32,8 +41,13 @@ public class NormalLoop implements GameLoop {
 			if(board.isInBoard(clickPosition)) {
 				Box clickedBox = board.getBox(clickPosition);
 				clickedBox.onClick();
+				
+				//demo
+				clickedBox.markAsAvailable(!clickedBox.isAvailable());
 			}
 		}
+		
+		
 	}
 
 }

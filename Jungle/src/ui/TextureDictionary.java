@@ -6,6 +6,8 @@ public class TextureDictionary {
 	
 	private static String DirPath = "./Textures/";
 	
+	private static Texture availableMarker = new Texture(DirPath+"available1.png");
+	
 	public static Texture getBoxTexture(Landscape landscape) {
 		String url = DirPath;
 		switch(landscape) {
@@ -60,6 +62,10 @@ public class TextureDictionary {
 				break;
 		}
 		return new Texture(url);
+	}
+	
+	public static Texture getAvailableMarker() {
+		return availableMarker;
 	}
 
 }

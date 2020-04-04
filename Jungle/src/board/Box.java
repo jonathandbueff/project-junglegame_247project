@@ -15,6 +15,7 @@ public class Box implements Clickable{
 	public static int Length = 120;
 	
 	private Texture texture;
+	private boolean isAvailable = false;  //whether to render as available 
 	
 	public Box(Landscape landscape) {
 		this.landscape = landscape;
@@ -27,11 +28,25 @@ public class Box implements Clickable{
 	}
 	
 	public void render() {
-		texture.renderAt(position);
+		if(isAvailable) {
+			Texture availableMarker = TextureDictionary.getAvailableMarker();
+			availableMarker.renderAt(position);
+		}
+		else {
+			texture.renderAt(position);
+		}
 		if(animal!=null) {
 			Position center = animal.centerTo(position);
 			animal.renderAt(center);
 		}
+	}
+	
+	public void markAsAvailable(boolean isAvailable) {
+		this.isAvailable = isAvailable;
+	}
+	
+	public boolean isAvailable() {
+		return isAvailable;
 	}
 	
 	public Landscape getKind() {
