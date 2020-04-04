@@ -1,18 +1,20 @@
 package board;
 
 import ui.Position;
+
+import java.util.LinkedList;
+import java.util.List;
+
 import board.Enumerations.Landscape;
 import board.Enumerations.Rank;
 
 
 public class GameBoard {
 	
-	public static final int NumCol = 8;
+	public static final int NumCol = 9;
 	public static final int NumRow = 7;
 	
     private Position position;   //top left corner
-	private Box[][] boxes;
-	
 	
 	private Box[][] board;
 	private int turn;
@@ -25,13 +27,41 @@ public class GameBoard {
 	
 	public GameBoard(Position pos) {
 		position = pos;
-		boxes = new Box[NumRow][NumCol];	
-		//TODO: create and aligned boxes
+		board = new Box[NumRow][NumCol];	
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board[i].length; j++) {
+				Position offset = new Position(j*Box.Length,i*Box.Length);
+				Position boxPosition = pos.add(offset);
+				board[i][j] = new Box(Landscape.land, boxPosition);
+			}
+		}
+		board[3][0].setKind(Landscape.den1);
+		board[3][8].setKind(Landscape.den2);
+		
+		board[2][0].setKind(Landscape.trap1);
+		board[4][0].setKind(Landscape.trap1);
+		board[3][1].setKind(Landscape.trap1);
+		board[2][8].setKind(Landscape.trap2);
+		board[4][8].setKind(Landscape.trap2);
+		board[3][7].setKind(Landscape.trap2);
+		
+		board[1][3].setKind(Landscape.water);
+		board[1][4].setKind(Landscape.water);
+		board[1][5].setKind(Landscape.water);
+		board[2][3].setKind(Landscape.water);
+		board[2][4].setKind(Landscape.water);
+		board[2][5].setKind(Landscape.water);
+		board[4][3].setKind(Landscape.water);
+		board[4][4].setKind(Landscape.water);
+		board[4][5].setKind(Landscape.water);
+		board[5][3].setKind(Landscape.water);
+		board[5][4].setKind(Landscape.water);
+		board[5][5].setKind(Landscape.water);
 	}
 	
 	public GameBoard() {
 		this.turn = 0;
-		board = new Box[7][9];
+		board = new Box[NumRow][NumCol];
 		for (int i = 0; i < board.length; i++) {
 			for (int j = 0; j < board[i].length; j++) {
 				board[i][j] = new Box(Landscape.land);
@@ -55,17 +85,16 @@ public class GameBoard {
 		}
 	}
 	
-	public void render() {
-	}
-	
 
 	/**
 	 * @param pos a position inside the window
 	 * @return if the input position is inside the game board
 	 */
 	public boolean isInBoard(Position pos) {
-		//TODO
-		return false;
+		Position bottomRight = position.add(new Position(NumCol*Box.Length, NumRow*Box.Length));
+		boolean isWidthInRange = pos.isFurther(position) && (!pos.isFurther(bottomRight));
+		boolean isHeightInRange = (!pos.isHigher(position)) && pos.isHigher(bottomRight);
+		return isWidthInRange && isHeightInRange;
 	}
 		
 	
@@ -75,18 +104,28 @@ public class GameBoard {
 	 * @return a box
 	 */
 	public Box getBox(Position pos) {
-		//TODO
-		return null;
+		int rowIndex = (pos.getY() - position.getY())/Box.Length;
+		int colIndex = (pos.getX() - position.getX())/Box.Length;
+		try {
+			return board[rowIndex][colIndex];
+		}
+		catch(ArrayIndexOutOfBoundsException exception) {
+			throw new IllegalStateException("such box does not exist");
+		}	
 	}
 	
 	
 	public Box getBox(int row, int col) {
 		try {
-			return boxes[row][col];
+			return board[row][col];
 		}
 		catch(ArrayIndexOutOfBoundsException exception) {
 			throw new IllegalStateException("such box does not exist");
 		}	
+	}
+	
+	public Box[][] getBoxes(){
+		return board;
 	}
 	
 	

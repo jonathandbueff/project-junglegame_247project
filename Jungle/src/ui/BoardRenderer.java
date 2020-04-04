@@ -13,9 +13,15 @@ public class BoardRenderer {
 	
 	public static void renderBoard(Collection<Box> boxes) {
 		for(Box box : boxes) {
-			Position boxPosition = box.getPosition();
-			Texture boxTexture = Texture.getTextureOfBox(box.getBoxType());
-			boxTexture.renderAt(boxPosition);
+			box.render();
 		}
+	}
+	
+	public static void renderBoard(Box[][] boxes) {
+		for(Box[] row : boxes) {
+			for(Box box : row) {
+				box.render();
+			}
+		}	
 	}
 }

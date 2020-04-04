@@ -10,6 +10,7 @@ import org.lwjgl.opengl.GL;
 
 import board.Box;
 import board.BoxType;
+import board.Enumerations.Landscape;
 import core.*;
 import ui.BackgroundRenderer;
 import ui.BoardRenderer;
@@ -30,16 +31,15 @@ public class TextureTestLoop implements GameLoop {
 	
 	@Override
 	public void start() {
-		boxNormal = new Box(new Position(200,200), BoxType.NORMAL);
-		boxDen = new Box(new Position(400,200), BoxType.DEN);
-		boxWater = new Box(new Position(800,200), BoxType.WATER);
-		boxTrap = new Box(new Position(1000,200), BoxType.TRAP);	
+		boxNormal = new Box(Landscape.land,new Position(200,200));
+		boxDen = new Box(Landscape.den1,new Position(400,200));
+		boxWater = new Box(Landscape.water,new Position(800,200));
+		boxTrap = new Box(Landscape.trap1,new Position(1000,200));	
 		boxList.add(boxNormal);
 		boxList.add(boxDen);
 		boxList.add(boxWater);
 		boxList.add(boxTrap);
-		
-		
+				
 	}
 
 	@Override

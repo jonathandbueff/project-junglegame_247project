@@ -46,7 +46,7 @@ class GameBoardTest {
 		Position boxPos = new Position(Box.Length*4+1,Box.Length*5+1);
 		Position boxPosInWindow = board.getPosition().add(boxPos);
 		Box boxGetByPos = board.getBox(boxPosInWindow);
-		Box boxGetByCordinate = board.getBox(4, 5);
+		Box boxGetByCordinate = board.getBox(5, 4);
 		Assert.assertNotNull("box returned is null", boxGetByPos);
 		Assert.assertEquals("get box by position is not correct",boxGetByCordinate,boxGetByPos);
 	}

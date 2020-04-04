@@ -4,19 +4,39 @@ package board;
 import board.Enumerations.Landscape;
 import ui.Clickable;
 import ui.Position;
+import ui.Texture;
+import ui.TextureDictionary;
 
 public class Box implements Clickable{
 	private Landscape landscape; // land, water, trap, den
 	private Animal animal; // could be null
 	
 	private Position position;
+	public static int Length = 120;
+	
+	private Texture texture;
 	
 	public Box(Landscape landscape) {
 		this.landscape = landscape;
 	}
 	
+	public Box(Landscape scape, Position pos) {
+		this.landscape = scape;
+		this.position = pos;
+		texture = TextureDictionary.getBoxTexture(scape);
+	}
+	
+	public void render() {
+		texture.renderAt(position);
+	}
+	
 	public Landscape getKind() {
 		return this.landscape;
+	}
+	
+	public void setKind(Landscape scape) {
+		this.landscape = scape;
+		texture = TextureDictionary.getBoxTexture(scape);
 	}
 	
 	public Animal getAnimal() {
@@ -34,7 +54,7 @@ public class Box implements Clickable{
 	@Override
 	public void onClick() {
 		// TODO Auto-generated method stub
-		
+		System.out.println(position);
 	}
 	
 }
