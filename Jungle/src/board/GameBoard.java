@@ -45,6 +45,22 @@ public class GameBoard {
 			i++;
 		}
 		// attach animals to corresponding boxes
+		board[0][0].setAnimal(animals0[6]);
+		board[8][6].setAnimal(animals1[6]);
+		board[0][6].setAnimal(animals0[5]);
+		board[8][0].setAnimal(animals1[5]);
+		board[2][0].setAnimal(animals0[0]);
+		board[6][6].setAnimal(animals1[0]);
+		board[1][1].setAnimal(animals0[2]);
+		board[7][5].setAnimal(animals1[2]);
+		board[1][5].setAnimal(animals0[1]);
+		board[7][1].setAnimal(animals1[1]);
+		board[2][2].setAnimal(animals0[4]);
+		board[6][4].setAnimal(animals1[4]);
+		board[2][4].setAnimal(animals0[3]);
+		board[6][2].setAnimal(animals1[3]);
+		board[2][6].setAnimal(animals0[7]);
+		board[6][0].setAnimal(animals1[7]);
 		// ready to start
 	}
 	
