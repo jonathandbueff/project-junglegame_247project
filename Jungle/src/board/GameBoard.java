@@ -5,6 +5,8 @@ import board.Enumerations.Rank;
 
 public class GameBoard {
 	private Box[][] board;
+	private Animal[] animals0 = new Animal[8];
+	private Animal[] animals1 = new Animal[8];
 	private int turn;
 	private Animal current;
 	private int current_x;
@@ -36,6 +38,14 @@ public class GameBoard {
 				board[i][j] = new Box(Landscape.water);
 			}
 		}
+		int i = 0;
+		for (Rank rank : Rank.values()) {
+			animals0[i] = new Animal(rank, 0);
+			animals1[i] = new Animal(rank, 1);
+			i++;
+		}
+		// attach animals to corresponding boxes
+		// ready to start
 	}
 	
 	// need an event listener for mouse click
