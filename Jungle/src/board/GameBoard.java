@@ -326,8 +326,4 @@ public class GameBoard {
 		return (target.getKind() == Landscape.den1 || target.getKind() == Landscape.den2);
 
 	}
-	
-	public void turn() {
-		this.turn = 1 - this.turn;
-	}
 }
