@@ -257,13 +257,23 @@ public class GameBoard {
 	public List<Box> getPossibleMoves(Box box) {
 		List<Box> ans = new LinkedList<>();
 		for (int i = 0; i < board.length; i++) {
-			for (int j = 0; i < board[i].length; j++) {
+			for (int j = 0; j < board[i].length; j++) {
 				if (canMoveTo(i, j)) {
 					ans.add(board[i][j]);
 				}
 			}
 		}
 		return ans;
+	}
+
+	
+	
+	public void markAllAsUnavailable() {
+		for(Box[] row : board) {
+			for(Box box : row) {
+				box.markAsAvailable(false);
+			}		
+		}
 	}
 	
 	//TODO: cleaner
@@ -288,6 +298,15 @@ public class GameBoard {
 		}
 		if (target_box.getKind() == Landscape.den2 && current.getSide() == 1) {
 			System.out.println("cannot get into own den");
+			return false;
+		}
+		Animal targetAnimal = target_box.getAnimal();
+		if(targetAnimal!=null && targetAnimal.getSide() == current.getSide()) {
+			System.out.println("cannot eat own animal");
+			return false;
+		}
+		if(targetAnimal!=null && targetAnimal.isSuperiorTo(current)==1) {
+			System.out.println("cannot eat stronger animal");
 			return false;
 		}
 		if (current.getRank() == Rank.mouse) {

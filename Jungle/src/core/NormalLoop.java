@@ -1,6 +1,7 @@
 package core;
 
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -54,6 +55,8 @@ public class NormalLoop implements GameLoop {
 					//demo
 					//clickedBox.markAsAvailable(!clickedBox.isAvailable());
 					if (board.selectAnimal(clickedBox)) {
+						Collection<Box> moves = board.getPossibleMoves(clickedBox);
+						markAvailableBoxes(moves, true);
 						System.out.println("selected");
 						state = GameState.move;
 					}
@@ -63,6 +66,7 @@ public class NormalLoop implements GameLoop {
 		else if (state.equals(GameState.move)) {
 			if(Mouse.isClick(windowId)) {
 				Position clickPosition = Mouse.getMousePosition(windowId);
+				board.markAllAsUnavailable();
 				if(board.isInBoard(clickPosition)) {
 					Box clickedBox = board.getBox(clickPosition);
 					clickedBox.onClick();
@@ -70,6 +74,8 @@ public class NormalLoop implements GameLoop {
 					
 					if (board.canSelect(clickedBox)) {
 						board.selectAnimal(clickedBox);
+						Collection<Box> moves = board.getPossibleMoves(clickedBox);
+						markAvailableBoxes(moves, true);
 						System.out.println("selected");
 					}
 					//demo
@@ -84,6 +90,7 @@ public class NormalLoop implements GameLoop {
 			}
 		}
 		else if (state.equals(GameState.update)) {
+			board.markAllAsUnavailable();
 			if (board.updateBoard()) {
 				// win
 			}
@@ -104,5 +111,11 @@ public class NormalLoop implements GameLoop {
 		
 		
 	}
-
+	
+	private void markAvailableBoxes(Collection<Box> boxes, boolean isAvailable) {
+		for(Box box : boxes) {
+			box.markAsAvailable(isAvailable);
+		}
+	}
+	
 }
