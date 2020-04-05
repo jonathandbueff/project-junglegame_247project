@@ -236,6 +236,8 @@ public class GameBoard {
     	return move(box.getX(), box.getY());
     }
 	
+    
+    //TODO
 	public boolean move(int x, int y) {
 		boolean m = canMoveTo(x, y);
 		boolean e = canEat(x, y);
@@ -370,8 +372,8 @@ public class GameBoard {
 		board[x][y].setAnimal(current);
 		current = null;
 		turn = 1 - turn;
-		if (board[x][y].getKind() == Landscape.den1 || board[x][y].getKind() == Landscape.den2) return true;
-		return false;
+		return (board[x][y].getKind() == Landscape.den1 || board[x][y].getKind() == Landscape.den2);
+
 	}
 	
 	public void turn() {

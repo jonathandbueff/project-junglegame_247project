@@ -13,6 +13,7 @@ import ui.Position;
 import ui.Window;
 import ui.WindowController;
 
+
 public class NormalLoop implements GameLoop {
 	
 	GameBoard board;
@@ -98,16 +99,7 @@ public class NormalLoop implements GameLoop {
 				state = GameState.select;
 			}
 		}
-		/*if(Mouse.isClick(windowId)) {
-			Position clickPosition = Mouse.getMousePosition(windowId);
-			if(board.isInBoard(clickPosition)) {
-				Box clickedBox = board.getBox(clickPosition);
-				clickedBox.onClick();
-				
-				//demo
-				clickedBox.markAsAvailable(!clickedBox.isAvailable());
-			}
-		}*/
+		
 		
 		
 	}

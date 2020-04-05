@@ -3,6 +3,12 @@ package core;
 
 import coreTests.*;
 
+/**
+ * 
+ * @author Yigan
+ *
+ */
+
 public class CoreLoop implements GameLoop {
 	
 	public static CoreLoop current;
@@ -15,7 +21,6 @@ public class CoreLoop implements GameLoop {
 	
 	@Override
 	public void start() {
-		// TODO Initialize default runningLoop;
 		runningLoop = new NormalLoop();
 		runningLoop.start();
 	}
