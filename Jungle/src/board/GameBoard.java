@@ -254,7 +254,17 @@ public class GameBoard {
 		target_y = box.getY();
 	}
 	
-	
+	public List<Box> getPossibleMoves(Box box) {
+		List<Box> ans = new LinkedList<>();
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; i < board[i].length; j++) {
+				if (canMoveTo(i, j)) {
+					ans.add(board[i][j]);
+				}
+			}
+		}
+		return ans;
+	}
 	
 	//TODO: cleaner
 	private boolean canMoveTo(int x, int y) {
