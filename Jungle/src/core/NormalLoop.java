@@ -29,14 +29,8 @@ public class NormalLoop implements GameLoop {
 	
 	@Override
 	public void start() {
-		board = GameBoard.createBoardDefault(new Position(80,35));
-		
-		window = WindowController.current.getWindow();
-		
-		
-		board.getBox(1, 1).markAsAvailable(true);
-		board.getBox(1, 1).markAsAvailable(false);
-		
+		board = GameBoard.createBoardDefault(new Position(80,35));		
+		window = WindowController.current.getWindow();	
 		state = GameState.select;
 	}
 
@@ -46,6 +40,60 @@ public class NormalLoop implements GameLoop {
 		BoardRenderer.renderBoard(board);
 		
 		long windowId = window.getID();
+		
+		switch(state) {
+			
+			case select:
+				if(Mouse.isClick(windowId)) {
+					
+					Position clickPosition = Mouse.getMousePosition(windowId);
+					
+					if(board.isInBoard(clickPosition)) {
+						Box clickedBox = board.getBox(clickPosition);
+						
+						if (board.selectAnimal(clickedBox)) {
+							markAvailableBoxes(clickedBox);
+							state = GameState.move;
+						}
+					}
+				}
+				break;
+			
+			case move:
+				if(Mouse.isClick(windowId)) {
+					
+					Position clickPosition = Mouse.getMousePosition(windowId);
+					board.markAllAsUnavailable();
+					
+					if(board.isInBoard(clickPosition)) {
+						Box clickedBox = board.getBox(clickPosition);
+						
+						if (board.canSelect(clickedBox)) {
+							board.selectAnimal(clickedBox);
+							markAvailableBoxes(clickedBox);
+						}
+						else if (board.move(clickedBox)) {
+							board.setTarget(clickedBox);
+							state = GameState.update;
+						}
+					}
+				}
+				break;
+			
+			case update:
+				board.markAllAsUnavailable();
+				if (board.updateBoard()) {
+					// win
+				}
+				else {
+					state = GameState.select;
+				}
+				break;
+			
+		}
+		
+		/*
+		
 		if (state.equals(GameState.select)) {
 			if(Mouse.isClick(windowId)) {
 				Position clickPosition = Mouse.getMousePosition(windowId);
@@ -53,8 +101,6 @@ public class NormalLoop implements GameLoop {
 					Box clickedBox = board.getBox(clickPosition);
 					clickedBox.onClick();
 					
-					//demo
-					//clickedBox.markAsAvailable(!clickedBox.isAvailable());
 					if (board.selectAnimal(clickedBox)) {
 						Collection<Box> moves = board.getPossibleMoves(clickedBox);
 						markAvailableBoxes(moves, true);
@@ -98,15 +144,22 @@ public class NormalLoop implements GameLoop {
 			else {
 				state = GameState.select;
 			}
-		}
+		}*/
 		
 		
 		
 	}
 	
-	private void markAvailableBoxes(Collection<Box> boxes, boolean isAvailable) {
+	/*private void markAvailableBoxes(Collection<Box> boxes, boolean isAvailable) {
 		for(Box box : boxes) {
 			box.markAsAvailable(isAvailable);
+		}
+	}*/
+	
+	private void markAvailableBoxes(Box clickedBox) {
+		Collection<Box> moves = board.getPossibleMoves(clickedBox);
+		for(Box box : moves) {
+			box.markAsAvailable(true);
 		}
 	}
 	

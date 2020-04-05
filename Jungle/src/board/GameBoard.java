@@ -260,7 +260,7 @@ public class GameBoard {
 		List<Box> ans = new LinkedList<>();
 		for (int i = 0; i < board.length; i++) {
 			for (int j = 0; j < board[i].length; j++) {
-				if (canMoveTo(i, j)) {
+				if (canMoveTo(i, j) && canEat(i,j)) {
 					ans.add(board[i][j]);
 				}
 			}
@@ -305,10 +305,6 @@ public class GameBoard {
 		Animal targetAnimal = target_box.getAnimal();
 		if(targetAnimal!=null && targetAnimal.getSide() == current.getSide()) {
 			System.out.println("cannot eat own animal");
-			return false;
-		}
-		if(targetAnimal!=null && targetAnimal.isSuperiorTo(current)==1) {
-			System.out.println("cannot eat stronger animal");
 			return false;
 		}
 		if (current.getRank() == Rank.mouse) {
