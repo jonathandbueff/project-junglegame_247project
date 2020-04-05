@@ -10,8 +10,8 @@ public class WindowController {
 	public static WindowController current;
 	
 	public static String NAME = "Jungle";
-	public static final int DEFAULT_WIDTH = 1280;
-	public static final int DEFAULT_HEIGHT = 800;
+	public static final int DEFAULT_WIDTH = 1600;
+	public static final int DEFAULT_HEIGHT = 900;
 	
 	private Window window;
 	private GameLoop loop; 
@@ -73,10 +73,6 @@ public class WindowController {
 		}
 		
 		glfwTerminate();
-	}
-	
-	public void setLoop(GameLoop loop) {
-		this.loop = loop;
 	}
 	
 	public Window getWindow() {

@@ -6,7 +6,7 @@ public class JungleApp {
 	
 	public static void main(String[] args) {
 		
-		WindowController controller = new WindowController(1600,900);
+		WindowController controller = new WindowController();
 	    controller.centerWindow();
 	    controller.run();
 		
