@@ -62,4 +62,8 @@ public class Animal {
 	public void setSide(int side) {
 		this.side = side;
 	}
+	
+	public static Animal getEmpty() {
+		return new Animal(Rank.empty,0);
+	}
 }

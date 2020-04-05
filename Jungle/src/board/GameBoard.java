@@ -33,6 +33,7 @@ public class GameBoard {
 			for (int j = 0; j < board[i].length; j++) {
 				Position boxPosition = pos.add(j*Box.Length,i*Box.Length);
 				board[i][j] = new Box(Landscape.land, boxPosition);
+				board[i][j].setAnimal(Animal.getEmpty());
 			}
 		}
 		board[3][0].setKind(Landscape.den1);
@@ -141,12 +142,12 @@ public class GameBoard {
 	}
 
 	public boolean canSelect(Box box) {
-		return (box.getAnimal() != null && box.getAnimal().getSide() == this.turn);
+		return (box.isPresent() && box.getAnimal().getSide() == this.turn);
 	}
 
     private boolean canEat(Box current, Box target) {
-        if (target.getAnimal() == null) return true;
-        if (target.getAnimal() != null && target.getAnimal().getSide() != turn) {
+        if (target.isEmpty()) return true;
+        if (target.isPresent() && target.getAnimal().getSide() != turn) {
             //Animal next = target.getAnimal();
             if (isTrap(target)) {
                 return true;
@@ -228,7 +229,7 @@ public class GameBoard {
 			return false;
 		}
 		Animal targetAnimal = target.getAnimal();
-		if(targetAnimal != null && targetAnimal.getSide() == current.getAnimal().getSide()) {
+		if(target.isPresent() && targetAnimal.getSide() == current.getAnimal().getSide()) {
 			//System.out.println("cannot eat own animal");
 			return false;
 		}
@@ -246,7 +247,7 @@ public class GameBoard {
 		}
 		if (target.getKind() == Landscape.water) return true;
 		else {
-			return !(current.getKind() == Landscape.water && target.getAnimal() != null);
+			return !(current.getKind() == Landscape.water && target.isPresent());
 		}
 	}
 	
@@ -266,7 +267,7 @@ public class GameBoard {
 					//System.out.println("cannot jump over non-water");
 					return false;
 				}
-				if (board[x][i].getAnimal() != null) {
+				if (board[x][i].isPresent()) {
 					//System.out.println("water is blocked");
 					return false;
 				}
@@ -279,7 +280,7 @@ public class GameBoard {
 					//System.out.println("cannot jump over non-water");
 					return false;
 				}
-				if (board[i][y].getAnimal() != null) {
+				if (board[i][y].isPresent()) {
 					//System.out.println("water is blocked");
 					return false;
 				}
@@ -303,7 +304,7 @@ public class GameBoard {
 	
 	public boolean updateBoard(Box current, Box target) {
 		target.setAnimal(current.getAnimal());
-		current.setAnimal(null);
+		current.setAnimal(Animal.getEmpty());
 		turn = 1 - turn;
 		return (target.getKind() == Landscape.den1 || target.getKind() == Landscape.den2);
 

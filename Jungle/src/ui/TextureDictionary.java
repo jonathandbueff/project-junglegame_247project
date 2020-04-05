@@ -61,6 +61,9 @@ public class TextureDictionary {
 			case elephant:
 				url+="elephant";
 				break;
+			default:
+				return null;
+					
 		}
 		url += sourceLabel + ".png";
 		return new Texture(url);

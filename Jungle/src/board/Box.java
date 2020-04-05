@@ -2,12 +2,13 @@ package board;
 
 
 import board.Enumerations.Landscape;
+import board.Enumerations.Rank;
 import ui.Clickable;
 import ui.Position;
 import ui.Texture;
 import ui.TextureDictionary;
 
-public class Box implements Clickable{
+public class Box {
 	private Landscape landscape; // land, water, trap, den
 	private Animal animal; // could be null
 	
@@ -53,7 +54,7 @@ public class Box implements Clickable{
 		else {
 			texture.renderAt(position);
 		}
-		if(animal!=null) {
+		if(isPresent()) {
 			Position center = animal.centerTo(position);
 			animal.renderAt(center);
 		}
@@ -87,11 +88,13 @@ public class Box implements Clickable{
 	public Position getPosition() {
 		return position;
 	}
-
-	@Override
-	public void onClick() {
-		// TODO Auto-generated method stub
-		System.out.println(position);
+	
+	public boolean isEmpty() {
+		return animal.getRank() == Rank.empty;
+	}
+	
+	public boolean isPresent() {
+		return animal.getRank() != Rank.empty;
 	}
 	
 }
