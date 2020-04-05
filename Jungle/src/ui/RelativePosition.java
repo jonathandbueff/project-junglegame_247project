@@ -16,7 +16,7 @@ public class RelativePosition {
 	 * @return relative position
 	 */
 	public static RelativePosition globalToRelative(Position global) {
-		Window window = WindowController.current.getWindow();
+		Window window = WindowController.getCurrentWindow();
 		int halfWidth = window.getWidth()/2;
 		int halfHeight = window.getHeight()/2;
 		float xpos = ((float)(global.getX()-halfWidth))/halfWidth;

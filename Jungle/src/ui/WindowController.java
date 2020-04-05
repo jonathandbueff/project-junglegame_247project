@@ -5,6 +5,13 @@ import static org.lwjgl.opengl.GL11.*;
 import org.lwjgl.opengl.GL;
 import core.*;
 
+/**
+ * Controller for window. The main loop is also in this class.
+ * There should be only one WindowController and one window at all time.
+ * @author teeli8
+ *
+ */
+
 public class WindowController {
 	
 	public static WindowController current;
@@ -77,5 +84,13 @@ public class WindowController {
 	
 	public Window getWindow() {
 		return this.window;
+	}
+	
+	public static Window getCurrentWindow() {
+		return current.window;
+	}
+	
+	public static long getCurrentWindowId() {
+		return current.window.getID();
 	}
 }

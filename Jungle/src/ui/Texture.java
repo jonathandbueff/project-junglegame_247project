@@ -4,16 +4,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
-import org.lwjgl.opengl.GL;
 
 import javax.imageio.ImageIO;
 
 import org.lwjgl.BufferUtils;
-
-import board.Animal;
-import board.BoxType;
 
 public class Texture {
 	
@@ -66,20 +61,6 @@ public class Texture {
 			glTexCoord2f(1f, 0f);
 			glVertex2f(bottomRight.x, topLeft.y);
 		glEnd();
-	}
-		
-	public static Texture getEmpty() {
-		return new Texture(BoxType.NORMAL.getUrl());
-	}
-	
-	public static Texture getTextureOfBox(BoxType type) {
-		String url = type.getUrl();
-		return new Texture(url);
-	}
-	
-	public static Texture getTextureOfAnimal(Animal animal) {
-		//TODO
-		throw new IllegalStateException("Not Implemented");
 	}
 	
 	public int getWidth() {

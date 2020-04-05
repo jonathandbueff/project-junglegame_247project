@@ -1,21 +1,14 @@
 package coreTests;
 
-import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL11.*;
 
 import java.util.LinkedList;
 import java.util.List;
 
-import org.lwjgl.opengl.GL;
-
 import board.Box;
-import board.BoxType;
 import board.Enumerations.Landscape;
 import core.*;
-import ui.BackgroundRenderer;
 import ui.BoardRenderer;
 import ui.Position;
-import ui.Texture;
 
 public class TextureTestLoop implements GameLoop {
 	

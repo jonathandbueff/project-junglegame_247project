@@ -3,7 +3,6 @@ package board;
 
 import board.Enumerations.Landscape;
 import board.Enumerations.Rank;
-import ui.Clickable;
 import ui.Position;
 import ui.Texture;
 import ui.TextureDictionary;
