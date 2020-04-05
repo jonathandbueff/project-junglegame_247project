@@ -249,6 +249,12 @@ public class GameBoard {
 	}
 	
 	
+	public void setTarget(Box box) {
+		target_x = box.getX();
+		target_y = box.getY();
+	}
+	
+	
 	
 	//TODO: cleaner
 	private boolean canMoveTo(int x, int y) {

@@ -16,7 +16,7 @@ public class Animal {
 		this.rank = rank;
 		//this.box = box;
 		this.side = side;
-		texture = TextureDictionary.getAnimalTexture(rank);
+		texture = TextureDictionary.getAnimalTexture(rank,side);
 	}
 	
 	public int isSuperiorTo(Animal other) {

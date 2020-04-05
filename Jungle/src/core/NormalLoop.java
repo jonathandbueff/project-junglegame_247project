@@ -75,6 +75,7 @@ public class NormalLoop implements GameLoop {
 					//demo
 					//clickedBox.markAsAvailable(!clickedBox.isAvailable());
 					else if (board.move(clickedBox)) {
+						board.setTarget(clickedBox);
 						System.out.println("moved");
 						state = GameState.update;
 					}

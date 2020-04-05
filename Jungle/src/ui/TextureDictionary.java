@@ -33,34 +33,36 @@ public class TextureDictionary {
 		return new Texture(url);
 	}
 	
-	public static Texture getAnimalTexture(Rank animalRank) {
+	public static Texture getAnimalTexture(Rank animalRank, int side) {
 		String url = DirPath;
+		int sourceLabel = side+1;
 		switch(animalRank) {
 			case mouse:
-				url+="mouse1.png";
+				url+="mouse";
 				break;
 			case cat:
-				url+="cat1.png";
+				url+="cat";
 				break;
 			case dog:
-				url+="dog1.png";
+				url+="dog";
 				break;
 			case wolf:
-				url+="wolf1.png";
+				url+="wolf";
 				break;
 			case leopard:
-				url+="leopard1.png";
+				url+="leopard";
 				break;
 			case tiger:
-				url+="tiger1.png";
+				url+="tiger";
 				break;
 			case lion:
-				url+="lion1.png";
+				url+="lion";
 				break;
 			case elephant:
-				url+="elephant1.png";
+				url+="elephant";
 				break;
 		}
+		url += sourceLabel + ".png";
 		return new Texture(url);
 	}
 	
