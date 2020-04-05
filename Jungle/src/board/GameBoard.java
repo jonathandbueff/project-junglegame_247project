@@ -140,24 +140,6 @@ public class GameBoard {
 		return position;
 	}
 
-	
-	
-	
-	// need an event listener for mouse click
-	// assume can sense
-	
-	/*public boolean selectAnimal(Box box) {
-		if (canSelect(box)) {
-			current = box.getAnimal();
-			current_x = box.getX();
-			current_y = box.getY();
-			System.out.println(current.getRank().name());
-			return true;
-		}
-		current = null;
-		return false;
-	}*/
-	
 	public boolean canSelect(Box box) {
 		return (box.getAnimal() != null && box.getAnimal().getSide() == this.turn);
 	}
