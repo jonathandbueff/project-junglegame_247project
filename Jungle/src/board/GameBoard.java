@@ -56,6 +56,13 @@ public class GameBoard {
 		board[5][3].setKind(Landscape.water);
 		board[5][4].setKind(Landscape.water);
 		board[5][5].setKind(Landscape.water);
+		
+		for (int i = 0; i < board.length; i++) {
+			for (int j = 0; j < board[i].length; j++) {
+				board[i][j].setX(i);
+				board[i][j].setY(j);
+			}
+		}
 	}
 	
 	public GameBoard() {
@@ -82,6 +89,7 @@ public class GameBoard {
 				board[i][j] = new Box(Landscape.water);
 			}
 		}
+		//for (int i = )
 	}
 	
 	private void initAnimalsDefault() {
@@ -164,18 +172,38 @@ public class GameBoard {
 	// need an event listener for mouse click
 	// assume can sense
 	
+	public boolean selectAnimal(Box box) {
+		if (canSelect(box.getX(), box.getY())) {
+			current = box.getAnimal();
+			current_x = box.getX();
+			current_y = box.getY();
+			System.out.println(current.getRank().name());
+			return true;
+		}
+		current = null;
+		return false;
+	}
+	
 	public boolean selectAnimal(int x, int y) {
 		if (canSelect(x, y)) { 
 			current = board[x][y].getAnimal();
 			current_x = x;
 			current_y = y;
+			System.out.println(current.getRank().name());
 			return true; 
 		}
 		current = null;
 		return false;
 	}
 	
-	public boolean canSelect(int x, int y) {
+	public boolean canSelect(Box box) {
+		if (box.getAnimal() != null && box.getAnimal().getSide() == this.turn) {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean canSelect(int x, int y) {
 		Box box = board[x][y];
 		if (box.getAnimal() != null && box.getAnimal().getSide() == this.turn) {
 			return true;
@@ -185,6 +213,7 @@ public class GameBoard {
 
     private boolean canEat(int x, int y) {
         Box nextPiece = board[x][y];
+        if (nextPiece.getAnimal() == null) return true;
         if (nextPiece.getAnimal() != null && nextPiece.getAnimal().getSide() != turn) {
             Animal next = nextPiece.getAnimal();
             if (isTrap(x, y)) {
@@ -203,13 +232,22 @@ public class GameBoard {
         }
     }
 
+    public boolean move(Box box) {
+    	return move(box.getX(), box.getY());
+    }
 	
 	public boolean move(int x, int y) {
-		if (canMoveTo(x,y) && canEat(x, y)) {
+		boolean m = canMoveTo(x, y);
+		boolean e = canEat(x, y);
+		if (m && e) {
+			//System.out.println("moved");
 			return true;
 		}
+		if (!m) System.out.println("Cannot move");
+		if (!e) System.out.println("Cannot eat");
 		return false;
 	}
+	
 	
 	
 	//TODO: cleaner
@@ -266,4 +304,7 @@ public class GameBoard {
 		return false;
 	}
 	
+	public void turn() {
+		this.turn = 1 - this.turn;
+	}
 }

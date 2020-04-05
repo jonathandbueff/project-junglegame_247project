@@ -13,7 +13,25 @@ public class Box implements Clickable{
 	
 	private Position position;
 	public static int Length = 120;
+	private int x;
+	private int y;
 	
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
 	private Texture texture;
 	private boolean isAvailable = false;  //whether to render as available 
 	

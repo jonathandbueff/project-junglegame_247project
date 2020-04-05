@@ -16,6 +16,13 @@ public class NormalLoop implements GameLoop {
 	
 	GameBoard board;
 	Window window;
+	GameState state;
+	
+	enum GameState {
+		select,
+		move,
+		update
+	}
 
 	
 	@Override
@@ -28,6 +35,7 @@ public class NormalLoop implements GameLoop {
 		board.getBox(1, 1).markAsAvailable(true);
 		board.getBox(1, 1).markAsAvailable(false);
 		
+		state = GameState.select;
 	}
 
 	@Override
@@ -36,7 +44,53 @@ public class NormalLoop implements GameLoop {
 		BoardRenderer.renderBoard(board);
 		
 		long windowId = window.getID();
-		if(Mouse.isClick(windowId)) {
+		if (state.equals(GameState.select)) {
+			if(Mouse.isClick(windowId)) {
+				Position clickPosition = Mouse.getMousePosition(windowId);
+				if(board.isInBoard(clickPosition)) {
+					Box clickedBox = board.getBox(clickPosition);
+					clickedBox.onClick();
+					
+					//demo
+					//clickedBox.markAsAvailable(!clickedBox.isAvailable());
+					if (board.selectAnimal(clickedBox)) {
+						System.out.println("selected");
+						state = GameState.move;
+					}
+				}
+			}
+		}
+		else if (state.equals(GameState.move)) {
+			if(Mouse.isClick(windowId)) {
+				Position clickPosition = Mouse.getMousePosition(windowId);
+				if(board.isInBoard(clickPosition)) {
+					Box clickedBox = board.getBox(clickPosition);
+					clickedBox.onClick();
+					System.out.println(clickedBox.getX() + ", " + clickedBox.getY());
+					
+					if (board.canSelect(clickedBox)) {
+						board.selectAnimal(clickedBox);
+						System.out.println("selected");
+					}
+					//demo
+					//clickedBox.markAsAvailable(!clickedBox.isAvailable());
+					else if (board.move(clickedBox)) {
+						System.out.println("moved");
+						state = GameState.update;
+					}
+					else System.out.println("did not either move or reselect");
+				}
+			}
+		}
+		else if (state.equals(GameState.update)) {
+			if (board.updateBoard()) {
+				// win
+			}
+			else {
+				state = GameState.select;
+			}
+		}
+		/*if(Mouse.isClick(windowId)) {
 			Position clickPosition = Mouse.getMousePosition(windowId);
 			if(board.isInBoard(clickPosition)) {
 				Box clickedBox = board.getBox(clickPosition);
@@ -45,7 +99,7 @@ public class NormalLoop implements GameLoop {
 				//demo
 				clickedBox.markAsAvailable(!clickedBox.isAvailable());
 			}
-		}
+		}*/
 		
 		
 	}
