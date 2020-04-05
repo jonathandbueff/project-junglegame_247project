@@ -270,42 +270,77 @@ public class GameBoard {
 	private boolean canMoveTo(int x, int y) {
 		Box current_box = board[current_x][current_y];
 		Box target_box = board[x][y];
-		if (x < 0 || x >= 9 || y < 0 || y >= 7) return false;
-		if (current_x != x && current_y != y) return false;
-		if (current_x == x && current_y == y) return false;
+		if (x < 0 || x >= board.length || y < 0 || y >= board[0].length) {
+			System.out.println("out of bound");
+			return false;
+		}
+		if (current_x != x && current_y != y) {
+			System.out.println("not on either direction");
+			return false;
+		}
+		if (current_x == x && current_y == y) {
+			System.out.println("cannot move to self");
+			return false;
+		}
 		if (target_box.getKind() == Landscape.den1 && current.getSide() == 0) {
+			System.out.println("cannot get into own den");
 			return false;
 		}
 		if (target_box.getKind() == Landscape.den2 && current.getSide() == 1) {
+			System.out.println("cannot get into own den");
 			return false;
 		}
 		if (current.getRank() == Rank.mouse) {
-			if (Math.abs(current_x + current_y - x - y) != 1) return false;
+			if (Math.abs(current_x + current_y - x - y) != 1) {
+				System.out.println("distance != 1");
+				return false;
+			}
 			if (target_box.getKind() == Landscape.water) return true;
 			else {
-				if (current_box.getKind() == Landscape.water && target_box.getAnimal() != null) return false;
+				if (current_box.getKind() == Landscape.water && target_box.getAnimal() != null) {
+					System.out.println("cannot move on to land when occupied");
+					return false;
+				}
 				return true;
 			}
 		}
-		if (target_box.getKind() == Landscape.water) return false;
+		if (target_box.getKind() == Landscape.water) {
+			System.out.println("cannot move into water");
+			return false;
+		}
 		if (current.getRank() == Rank.tiger || current.getRank() == Rank.lion) {
 			if (Math.abs(current_x + current_y - x - y) == 1) return true;
 			if (current_x == x) {
 				for (int i = Math.min(current_y, y) + 1; i < Math.max(current_y, y); i++) {
-					if (board[x][i].getKind() != Landscape.water) return false;
-					if (board[x][i].getAnimal() != null) return false;
+					if (board[x][i].getKind() != Landscape.water) {
+						System.out.println("cannot jump over non-water");
+						return false;
+					}
+					if (board[x][i].getAnimal() != null) {
+						System.out.println("water is blocked");
+						return false;
+					}
 				}
 				return true;
 			}
 			if (current_y == y) {
 				for (int i = Math.min(current_x, x) + 1; i < Math.max(current_x, x); i++) {
-					if (board[i][y].getKind() != Landscape.water) return false;
-					if (board[i][y].getAnimal() != null) return false;
+					if (board[i][y].getKind() != Landscape.water) {
+						System.out.println("cannot jump over non-water");
+						return false;
+					}
+					if (board[i][y].getAnimal() != null) {
+						System.out.println("water is blocked");
+						return false;
+					}
 				}
 				return true;
 			}
 		}
-		if (Math.abs(current_x + current_y - x - y) != 1) return false;
+		if (Math.abs(current_x + current_y - x - y) != 1) {
+			System.out.println("distance != 1");
+			return false;
+		}
 		return true;
 	}
 	
