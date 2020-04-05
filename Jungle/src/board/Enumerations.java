@@ -9,7 +9,8 @@ public class Enumerations {
 		leopard,
 		tiger,
 		lion,
-		elephant
+		elephant,
+		empty
 	}
 	
 	public enum Landscape {

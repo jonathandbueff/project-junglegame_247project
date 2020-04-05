@@ -18,11 +18,12 @@ public class GameBoard {
 	
 	private Box[][] board;
 	private int turn;
-	private Animal current;
-	private int current_x;
-	private int current_y;
-	private int target_x;
-	private int target_y;
+	//private Animal current;
+	//TODO
+	//private int current_x;
+	//private int current_y;
+	//private int target_x;
+	//private int target_y;
 	
 	
 	public GameBoard(Position pos) {
@@ -63,33 +64,6 @@ public class GameBoard {
 				board[i][j].setY(j);
 			}
 		}
-	}
-	
-	public GameBoard() {
-		this.turn = 0;
-		board = new Box[NumRow][NumCol];
-		for (int i = 0; i < board.length; i++) {
-			for (int j = 0; j < board[i].length; j++) {
-				board[i][j] = new Box(Landscape.land);
-			}
-		}
-		board[0][3] = new Box(Landscape.den1);
-		board[8][3] = new Box(Landscape.den2);
-		board[0][2] = new Box(Landscape.trap1);
-		board[0][4] = new Box(Landscape.trap1);
-		board[1][3] = new Box(Landscape.trap1);
-		board[8][2] = new Box(Landscape.trap2);
-		board[8][4] = new Box(Landscape.trap2);
-		board[7][3] = new Box(Landscape.trap2);
-		for (int i = 3; i <= 5; i++) {
-			for (int j = 1; j <= 2; j++) {
-				board[i][j] = new Box(Landscape.water);
-			}
-			for (int j = 4; j <= 5; j++) {
-				board[i][j] = new Box(Landscape.water);
-			}
-		}
-		//for (int i = )
 	}
 	
 	private void initAnimalsDefault() {
@@ -172,8 +146,8 @@ public class GameBoard {
 	// need an event listener for mouse click
 	// assume can sense
 	
-	public boolean selectAnimal(Box box) {
-		if (canSelect(box.getX(), box.getY())) {
+	/*public boolean selectAnimal(Box box) {
+		if (canSelect(box)) {
 			current = box.getAnimal();
 			current_x = box.getX();
 			current_y = box.getY();
@@ -182,85 +156,42 @@ public class GameBoard {
 		}
 		current = null;
 		return false;
-	}
-	
-	public boolean selectAnimal(int x, int y) {
-		if (canSelect(x, y)) { 
-			current = board[x][y].getAnimal();
-			current_x = x;
-			current_y = y;
-			System.out.println(current.getRank().name());
-			return true; 
-		}
-		current = null;
-		return false;
-	}
+	}*/
 	
 	public boolean canSelect(Box box) {
-		if (box.getAnimal() != null && box.getAnimal().getSide() == this.turn) {
-			return true;
-		}
-		return false;
-	}
-	
-	private boolean canSelect(int x, int y) {
-		Box box = board[x][y];
-		if (box.getAnimal() != null && box.getAnimal().getSide() == this.turn) {
-			return true;
-		}
-		return false;
+		return (box.getAnimal() != null && box.getAnimal().getSide() == this.turn);
 	}
 
-    private boolean canEat(int x, int y) {
-        Box nextPiece = board[x][y];
-        if (nextPiece.getAnimal() == null) return true;
-        if (nextPiece.getAnimal() != null && nextPiece.getAnimal().getSide() != turn) {
-            Animal next = nextPiece.getAnimal();
-            if (isTrap(x, y)) {
+    private boolean canEat(Box current, Box target) {
+        if (target.getAnimal() == null) return true;
+        if (target.getAnimal() != null && target.getAnimal().getSide() != turn) {
+            //Animal next = target.getAnimal();
+            if (isTrap(target)) {
                 return true;
             }
-            return current.isSuperiorTo(next) >= 0;
+            return current.getAnimal().isSuperiorTo(target.getAnimal()) >= 0;
         }
         return false;
     }
 
-    private boolean isTrap(int x, int y) {
+    private boolean isTrap(Box box) {
         if (turn == 0) {
-            return board[x][y].getKind() == Landscape.trap1;
+            return box.getKind() == Landscape.trap1;
         } else {
-            return board[x][y].getKind() == Landscape.trap2;
+            return box.getKind() == Landscape.trap2;
         }
     }
-
-    public boolean move(Box box) {
-    	return move(box.getX(), box.getY());
-    }
-	
     
-    //TODO
-	public boolean move(int x, int y) {
-		boolean m = canMoveTo(x, y);
-		boolean e = canEat(x, y);
-		if (m && e) {
-			//System.out.println("moved");
-			return true;
-		}
-		if (!m) System.out.println("Cannot move");
-		if (!e) System.out.println("Cannot eat");
-		return false;
-	}
-	
-	
-	public void setTarget(Box box) {
-		target_x = box.getX();
-		target_y = box.getY();
-	}
-	
+    public boolean move(Box current, Box target) {
+    	return canMoveTo(current, target) && canEat(current, target);
+    }
+    
+	//TODO
 	public List<Box> getPossibleMoves(Box box) {
 		List<Box> ans = new LinkedList<>();
 		for (int i = 0; i < board.length; i++) {
 			for (int j = 0; j < board[i].length; j++) {
-				if (canMoveTo(i, j) && canEat(i,j)) {
+				if (canMoveTo(box, board[i][j]) && canEat(box, board[i][j])) {
 					ans.add(board[i][j]);
 				}
 			}
@@ -268,7 +199,6 @@ public class GameBoard {
 		return ans;
 	}
 
-	
 	
 	public void markAllAsUnavailable() {
 		for(Box[] row : board) {
@@ -279,96 +209,121 @@ public class GameBoard {
 	}
 	
 	//TODO: cleaner
-	private boolean canMoveTo(int x, int y) {
-		Box current_box = board[current_x][current_y];
-		Box target_box = board[x][y];
-		if (x < 0 || x >= board.length || y < 0 || y >= board[0].length) {
-			System.out.println("out of bound");
-			return false;
+	private boolean canMoveTo(Box current, Box target) {
+		if (!canMoveToGeneral(current, target)) return false;
+		
+		if (current.getAnimal().getRank() == Rank.mouse) {
+			return canMouseMoveTo(current, target);
 		}
+
+		else if (current.getAnimal().getRank() == Rank.tiger || current.getAnimal().getRank() == Rank.lion) {
+			return canTigerLionMoveTo(current, target);
+		}
+		else {
+			return canOtherMoveTo(current, target);
+		}
+	}
+	
+	private boolean canMoveToGeneral(Box current, Box target) {
+		int current_x = current.getX();
+		int current_y = current.getY();
+		int x = target.getX();
+		int y = target.getY();
 		if (current_x != x && current_y != y) {
-			System.out.println("not on either direction");
+			//System.out.println("not on either direction");
 			return false;
 		}
 		if (current_x == x && current_y == y) {
-			System.out.println("cannot move to self");
+			//System.out.println("cannot move to self");
 			return false;
 		}
-		if (target_box.getKind() == Landscape.den1 && current.getSide() == 0) {
-			System.out.println("cannot get into own den");
+		if (target.getKind() == Landscape.den1 && current.getAnimal().getSide() == 0) {
+			//System.out.println("cannot get into own den");
 			return false;
 		}
-		if (target_box.getKind() == Landscape.den2 && current.getSide() == 1) {
-			System.out.println("cannot get into own den");
+		if (target.getKind() == Landscape.den2 && current.getAnimal().getSide() == 1) {
+			//System.out.println("cannot get into own den");
 			return false;
 		}
-		Animal targetAnimal = target_box.getAnimal();
-		if(targetAnimal!=null && targetAnimal.getSide() == current.getSide()) {
-			System.out.println("cannot eat own animal");
-			return false;
-		}
-		if (current.getRank() == Rank.mouse) {
-			if (Math.abs(current_x + current_y - x - y) != 1) {
-				System.out.println("distance != 1");
-				return false;
-			}
-			if (target_box.getKind() == Landscape.water) return true;
-			else {
-				if (current_box.getKind() == Landscape.water && target_box.getAnimal() != null) {
-					System.out.println("cannot move on to land when occupied");
-					return false;
-				}
-				return true;
-			}
-		}
-		if (target_box.getKind() == Landscape.water) {
-			System.out.println("cannot move into water");
-			return false;
-		}
-		if (current.getRank() == Rank.tiger || current.getRank() == Rank.lion) {
-			if (Math.abs(current_x + current_y - x - y) == 1) return true;
-			if (current_x == x) {
-				for (int i = Math.min(current_y, y) + 1; i < Math.max(current_y, y); i++) {
-					if (board[x][i].getKind() != Landscape.water) {
-						System.out.println("cannot jump over non-water");
-						return false;
-					}
-					if (board[x][i].getAnimal() != null) {
-						System.out.println("water is blocked");
-						return false;
-					}
-				}
-				return true;
-			}
-			if (current_y == y) {
-				for (int i = Math.min(current_x, x) + 1; i < Math.max(current_x, x); i++) {
-					if (board[i][y].getKind() != Landscape.water) {
-						System.out.println("cannot jump over non-water");
-						return false;
-					}
-					if (board[i][y].getAnimal() != null) {
-						System.out.println("water is blocked");
-						return false;
-					}
-				}
-				return true;
-			}
-		}
-		if (Math.abs(current_x + current_y - x - y) != 1) {
-			System.out.println("distance != 1");
+		Animal targetAnimal = target.getAnimal();
+		if(targetAnimal != null && targetAnimal.getSide() == current.getAnimal().getSide()) {
+			//System.out.println("cannot eat own animal");
 			return false;
 		}
 		return true;
 	}
 	
-	public boolean updateBoard() {
-		board[current_x][current_y].setAnimal(null);
-		int x = target_x;
-		int y = target_y;
-		board[x][y].setAnimal(current);
-		current = null;
+	private boolean canMouseMoveTo(Box current, Box target) {
+		int current_x = current.getX();
+		int current_y = current.getY();
+		int x = target.getX();
+		int y = target.getY();
+		if (Math.abs(current_x + current_y - x - y) != 1) {
+			//System.out.println("distance != 1");
+			return false;
+		}
+		if (target.getKind() == Landscape.water) return true;
+		else {
+			return !(current.getKind() == Landscape.water && target.getAnimal() != null);
+		}
+	}
+	
+	private boolean canTigerLionMoveTo(Box current, Box target) {
+		int current_x = current.getX();
+		int current_y = current.getY();
+		int x = target.getX();
+		int y = target.getY();
+		if (target.getKind() == Landscape.water) {
+			//System.out.println("cannot move into water");
+			return false;
+		}
+		if (Math.abs(current_x + current_y - x - y) == 1) return true;
+		if (current_x == x) {
+			for (int i = Math.min(current_y, y) + 1; i < Math.max(current_y, y); i++) {
+				if (board[x][i].getKind() != Landscape.water) {
+					//System.out.println("cannot jump over non-water");
+					return false;
+				}
+				if (board[x][i].getAnimal() != null) {
+					//System.out.println("water is blocked");
+					return false;
+				}
+			}
+			return true;
+		}
+		if (current_y == y) {
+			for (int i = Math.min(current_x, x) + 1; i < Math.max(current_x, x); i++) {
+				if (board[i][y].getKind() != Landscape.water) {
+					//System.out.println("cannot jump over non-water");
+					return false;
+				}
+				if (board[i][y].getAnimal() != null) {
+					//System.out.println("water is blocked");
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean canOtherMoveTo(Box current, Box target) {
+		int current_x = current.getX();
+		int current_y = current.getY();
+		int x = target.getX();
+		int y = target.getY();
+		if (target.getKind() == Landscape.water) {
+			//System.out.println("cannot move into water");
+			return false;
+		}
+		return (Math.abs(current_x + current_y - x - y) == 1);
+	}
+	
+	public boolean updateBoard(Box current, Box target) {
+		target.setAnimal(current.getAnimal());
+		current.setAnimal(null);
 		turn = 1 - turn;
-		return (board[x][y].getKind() == Landscape.den1 || board[x][y].getKind() == Landscape.den2);
+		return (target.getKind() == Landscape.den1 || target.getKind() == Landscape.den2);
 
 	}
 	

@@ -16,6 +16,7 @@ public class Animal {
 		this.rank = rank;
 		//this.box = box;
 		this.side = side;
+		//if (rank == Rank.empty) return;
 		texture = TextureDictionary.getAnimalTexture(rank,side);
 	}
 	

@@ -4,6 +4,7 @@ package core;
 import java.util.Collection;
 import board.Box;
 import board.GameBoard;
+import board.GameController;
 import ui.BoardRenderer;
 import ui.Mouse;
 import ui.Position;
@@ -23,6 +24,7 @@ public class NormalLoop implements GameLoop {
 	GameBoard board;
 	Window window;
 	GameState state;
+	GameController controller;
 	
 	enum GameState {
 		select,
@@ -35,6 +37,7 @@ public class NormalLoop implements GameLoop {
 		board = GameBoard.createBoardDefault(new Position(80,35));		
 		window = WindowController.current.getWindow();	
 		state = GameState.select;
+		controller = new GameController(board);
 	}
 
 	@Override
@@ -54,10 +57,16 @@ public class NormalLoop implements GameLoop {
 					if(board.isInBoard(clickPosition)) {
 						Box clickedBox = board.getBox(clickPosition);
 						
-						if (board.selectAnimal(clickedBox)) {
+						if (controller.select(clickedBox)) {
+							System.out.println("selected");
 							markAvailableBoxes(clickedBox);
 							state = GameState.move;
 						}
+						/*
+						if (board.selectAnimal(clickedBox)) {
+							markAvailableBoxes(clickedBox);
+							state = GameState.move;
+						}*/
 					}
 				}
 				break;
@@ -72,22 +81,25 @@ public class NormalLoop implements GameLoop {
 						Box clickedBox = board.getBox(clickPosition);
 						
 						
-						if (board.canSelect(clickedBox)) {  //select another animal
-							board.selectAnimal(clickedBox);
+						if (controller.canSelect(clickedBox)) {  //select another animal
+							System.out.println("reselected");
+							controller.select(clickedBox);
 							markAvailableBoxes(clickedBox);
 						}
 						
-						else if (board.move(clickedBox)) {  //move
-							board.setTarget(clickedBox);
+						else if (controller.move(clickedBox)) {  //move
+							//board.setTarget(clickedBox);
+							System.out.println("moved");
 							state = GameState.update;
 						}
+						else System.out.println("neither reselected nor moved");
 					}
 				}
 				break;
 			
 			case update:
 				board.markAllAsUnavailable();
-				if (board.updateBoard()) {
+				if (controller.update()) {
 					// win
 				}
 				else {
@@ -100,7 +112,7 @@ public class NormalLoop implements GameLoop {
 	}
 
 	private void markAvailableBoxes(Box clickedBox) {
-		Collection<Box> moves = board.getPossibleMoves(clickedBox);
+		Collection<Box> moves = controller.getPossibleMoves(clickedBox);
 		for(Box box : moves) {
 			box.markAsAvailable(true);
 		}
