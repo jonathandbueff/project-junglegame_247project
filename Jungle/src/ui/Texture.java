@@ -3,6 +3,7 @@ package ui;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import static org.lwjgl.opengl.GL11.*;
 
@@ -87,7 +88,7 @@ public class Texture {
 				pixels.put((byte)((pixel>>24) & 0xFF));  //A
 			}
 		}
-		pixels.flip();
+		((Buffer)pixels).flip();
 		return pixels;
 	}
 	
