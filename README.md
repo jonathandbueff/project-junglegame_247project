@@ -18,9 +18,7 @@ https://gitforwindows.org/
 
 git clone https://github.com/wustlcse237sp20/project-junglegame_247project.git \
 cd project-junglegame_247project/Jungle \
-java -jar Jungle.jar
-
-It may not work on Mac currently. Please try Windows.
+java -XstartOnFirstThread -jar Jungle.jar
 
 ### User Stories:
 User Story (Iteration 1):
