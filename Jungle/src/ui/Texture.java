@@ -81,7 +81,7 @@ public class Texture {
 		
 		for(int w = 0; w < width; w++) {
 			for(int h = 0; h < height; h++) {
-				int pixel = rawPixels[w*width + h];
+				int pixel = rawPixels[w*height + h];
 				pixels.put((byte)((pixel>>16) & 0xFF));  //R
 				pixels.put((byte)((pixel>>8) & 0xFF));   //G
 				pixels.put((byte)(pixel & 0xFF));        //B
