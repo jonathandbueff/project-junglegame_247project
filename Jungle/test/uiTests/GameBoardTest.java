@@ -8,6 +8,13 @@ import board.Box;
 import board.GameBoard;
 import ui.Position;
 
+/**
+ * Abandoned Test Case.
+ * Cannot instantiate GameBoard without context
+ * 
+ * @author Tee Li
+ *
+ */
 class GameBoardTest {
 	
 	GameBoard board = new GameBoard(new Position(50,50));
