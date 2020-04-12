@@ -19,7 +19,7 @@ public class CoreLoop implements GameLoop {
 	
 	@Override
 	public void start() {
-		runningLoop = new NormalLoop();
+		runningLoop = new MenuLoop();
 		runningLoop.start();
 	}
 
@@ -33,9 +33,9 @@ public class CoreLoop implements GameLoop {
 	 * the new loop will run immediately;
 	 * @param loop new loop to run
 	 */
-	public void setLoop(GameLoop loop) {
-		runningLoop = loop;
-		runningLoop.start();
+	public static void setLoop(GameLoop loop) {
+		current.runningLoop = loop;
+		current.runningLoop.start();
 	}
 
 }

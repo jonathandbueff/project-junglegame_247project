@@ -21,11 +21,4 @@ public class Enumerations {
 		den1,
 		den2
 	}
-	
-	/*public enum GameState {
-		initial,
-		select,
-		move,
-		update
-	}*/
 }

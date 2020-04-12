@@ -93,4 +93,8 @@ public class WindowController {
 	public static long getCurrentWindowId() {
 		return current.window.getID();
 	}
+	
+	public static void closeCurrentWindow() {
+		glfwSetWindowShouldClose(getCurrentWindowId(), true);
+	}
 }
