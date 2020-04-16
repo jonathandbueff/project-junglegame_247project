@@ -15,28 +15,16 @@ public class Box {
 	public static int Length = 120;
 	private int x;
 	private int y;
-	
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
 
 	private Texture texture;
 	private boolean isAvailable = false;  //whether to render as available 
 	
+	/**
+	 * Constructor for testing purpose
+	 */
 	public Box(Landscape landscape) {
 		this.landscape = landscape;
+		texture = null;
 	}
 	
 	public Box(Landscape scape, Position pos) {
@@ -94,6 +82,23 @@ public class Box {
 	
 	public boolean isPresent() {
 		return animal.getRank() != Rank.empty;
+	}
+	
+	
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
 	}
 	
 }

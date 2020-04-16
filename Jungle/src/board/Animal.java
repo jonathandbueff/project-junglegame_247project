@@ -12,6 +12,15 @@ public class Animal {
 	
 	private Texture texture;
 	
+	/**
+	 * Constructor for testing purposes 
+	 */
+	public Animal(Rank rank) {
+		this.rank = rank;
+		this.side = 0;
+		texture = null;
+	}
+	
 	public Animal(Rank rank, int side) {
 		this.rank = rank;
 		//this.box = box;

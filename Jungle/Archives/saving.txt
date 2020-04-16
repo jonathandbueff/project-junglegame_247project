@@ -1,0 +1,16 @@
+tiger,0,0,0
+elephant,0,0,2
+mouse,1,0,6
+lion,1,0,8
+cat,0,1,1
+dog,1,1,7
+wolf,0,2,2
+leopard,1,2,6
+wolf,1,4,6
+dog,0,5,1
+leopard,0,5,2
+cat,1,5,7
+lion,0,6,0
+mouse,0,6,2
+elephant,1,6,5
+tiger,1,6,8
