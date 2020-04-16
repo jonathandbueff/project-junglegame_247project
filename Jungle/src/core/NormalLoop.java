@@ -122,7 +122,7 @@ public class NormalLoop implements GameLoop {
 	
 	private void checkButtonsClicked(Position clickPosition) {
 		if(saveButton.isClick(clickPosition)) {
-			ArchiveManager.saveBoard(board);
+			ArchiveManager.saveBoard(board, controller.getTurn());
 			saveButton.onClick();
 		}
 	}

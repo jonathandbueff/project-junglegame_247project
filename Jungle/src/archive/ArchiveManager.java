@@ -12,9 +12,10 @@ import board.GameBoard;
 public class ArchiveManager {
 	
 	public static final String FileName = "./Archives/saving.txt";
-
-	public static void saveBoard(GameBoard board) {
+	
+	public static void saveBoard(GameBoard board, int turn) {
 		List<String> lines = new LinkedList<>();
+		lines.add(Integer.toString(turn));
 		for(Box[] row : board.getBoxes()) {
 			for(Box box : row) {
 				if(box.isPresent()) {
@@ -32,19 +33,16 @@ public class ArchiveManager {
 		}
 	}
 	
-	public static List<ArchiveLine> loadBoard(){
-		List<ArchiveLine> lines = new LinkedList<>();
+	public static Archive loadBoard(){
 		
 		Path path = Paths.get(FileName);
 		try {
 			List<String> inputs = Files.readAllLines(path);
-			for(String line : inputs) {
-				lines.add(ArchiveLine.ParseLine(line));
-			}
+			return Archive.makeArchive(inputs);
 		} catch (IOException e) {
 			System.out.println("Cannot read archive");
+			return null;
 		}
-		return lines;	
 	}
 	
 }

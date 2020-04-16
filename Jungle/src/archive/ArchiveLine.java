@@ -8,8 +8,8 @@ import board.Enumerations.Rank;
  * 
  * This class transfers a box data and a line in archive documents from each other
  * such lines are in the format : "animal,side,rowIndex,colIndex"
- * For example, if a cat for player1 is in box (1,2), and archive line is
- * "cat,0,1,2" 
+ * For example, if a cat for player1 is in box (1,2), 
+ * the archive line is "cat,0,1,2" 
  * 
  * @author teeli8
  */
