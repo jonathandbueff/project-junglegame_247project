@@ -2,9 +2,12 @@ package core;
 
 
 import java.util.Collection;
+
+import archive.ArchiveManager;
 import board.Box;
 import board.GameBoard;
 import board.GameController;
+import buttons.*;
 import ui.BoardRenderer;
 import ui.Mouse;
 import ui.Position;
@@ -20,12 +23,14 @@ import ui.WindowController;
 
 public class NormalLoop implements GameLoop {
 	
-	GameBoard board;
-	long windowId;
-	GameState state;
-	GameController controller;
+	protected GameBoard board;
+	protected long windowId;
+	protected GameState state;
+	protected GameController controller;
 	
-	enum GameState {
+	protected Button saveButton;
+	
+	protected enum GameState {
 		select,
 		move,
 		update
@@ -37,12 +42,14 @@ public class NormalLoop implements GameLoop {
 		windowId = WindowController.getCurrentWindowId();	
 		state = GameState.select;
 		controller = new GameController(board);
+		saveButton = new SaveButton(new Position(1200,600));
 	}
 
 	@Override
 	public void update() {
 		
 		BoardRenderer.renderBoard(board);
+		renderUI();
 		
 		switch(state) {
 			
@@ -50,6 +57,7 @@ public class NormalLoop implements GameLoop {
 				if(Mouse.isClick(windowId)) {
 					
 					Position clickPosition = Mouse.getMousePosition(windowId);
+					checkButtonsClicked(clickPosition);
 					
 					if(board.isInBoard(clickPosition)) {
 						Box clickedBox = board.getBox(clickPosition);
@@ -105,6 +113,17 @@ public class NormalLoop implements GameLoop {
 		Collection<Box> moves = controller.getPossibleMoves(clickedBox);
 		for(Box box : moves) {
 			box.markAsAvailable(true);
+		}
+	}
+	
+	private void renderUI() {
+		saveButton.render();
+	}
+	
+	private void checkButtonsClicked(Position clickPosition) {
+		if(saveButton.isClick(clickPosition)) {
+			ArchiveManager.saveBoard(board, controller.getTurn());
+			saveButton.onClick();
 		}
 	}
 	

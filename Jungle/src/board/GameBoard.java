@@ -1,6 +1,10 @@
 package board;
 
 import ui.Position;
+
+import java.util.Collection;
+
+import archive.ArchiveLine;
 import board.Enumerations.Landscape;
 import board.Enumerations.Rank;
 
@@ -78,6 +82,18 @@ public class GameBoard {
 	public static GameBoard createBoardDefault(Position pos) {
 		GameBoard newBoard = new GameBoard(pos);
 		newBoard.initAnimalsDefault();
+		return newBoard;
+	}
+	
+	public static GameBoard createBoardWithArchive(Position pos, Collection<ArchiveLine> archive) {
+		GameBoard newBoard = new GameBoard(pos);
+		for(ArchiveLine line : archive) {
+			Animal animal = line.getAnimal();
+			int row = line.getRow();
+			int col = line.getCol();
+			Box box = newBoard.getBox(row, col);
+			box.setAnimal(animal);
+		}
 		return newBoard;
 	}
 	

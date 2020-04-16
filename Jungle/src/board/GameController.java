@@ -57,6 +57,16 @@ public class GameController {
 
 	}
 	
+	public int getTurn() {
+		return this.turn;
+	}
+	
+	public void setTurn(int turn) {
+		if(turn == 0 || turn == 1) {
+			this.turn = turn;
+		}
+	}
+	
 	
 	
 	/****Helpers****/
