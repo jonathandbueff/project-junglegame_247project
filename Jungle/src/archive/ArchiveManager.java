@@ -1,6 +1,5 @@
 package archive;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,6 +30,21 @@ public class ArchiveManager {
 		catch(IOException e) {
 			System.out.println("cannot write to archive");
 		}
+	}
+	
+	public static List<ArchiveLine> loadBoard(){
+		List<ArchiveLine> lines = new LinkedList<>();
+		
+		Path path = Paths.get(FileName);
+		try {
+			List<String> inputs = Files.readAllLines(path);
+			for(String line : inputs) {
+				lines.add(ArchiveLine.ParseLine(line));
+			}
+		} catch (IOException e) {
+			System.out.println("Cannot read archive");
+		}
+		return lines;	
 	}
 	
 }

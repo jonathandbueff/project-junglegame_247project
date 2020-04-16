@@ -23,14 +23,14 @@ import ui.WindowController;
 
 public class NormalLoop implements GameLoop {
 	
-	GameBoard board;
-	long windowId;
-	GameState state;
-	GameController controller;
+	protected GameBoard board;
+	protected long windowId;
+	protected GameState state;
+	protected GameController controller;
 	
-	Button saveButton;
+	protected Button saveButton;
 	
-	enum GameState {
+	protected enum GameState {
 		select,
 		move,
 		update

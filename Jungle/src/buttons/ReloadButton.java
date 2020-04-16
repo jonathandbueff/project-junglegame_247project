@@ -1,5 +1,7 @@
 package buttons;
 
+import core.ArchivedNormalLoop;
+import core.CoreLoop;
 import ui.Position;
 
 public class ReloadButton extends Button {
@@ -10,7 +12,7 @@ public class ReloadButton extends Button {
 	
 	@Override
 	public void onClick() {
-		System.out.println("reload");
+		CoreLoop.setLoop(new ArchivedNormalLoop());
 	}
 
 }

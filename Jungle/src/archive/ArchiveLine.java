@@ -33,6 +33,13 @@ public class ArchiveLine {
 		this.colIndex = box.getY();
 	}
 	
+	public String toLine() {
+		return this.animal.getRank() + separator 
+				+ this.animal.getSide() + separator 
+				+ rowIndex + separator 
+				+ colIndex;
+	}
+	
 	public Animal getAnimal() {
 		return this.animal;
 	}
@@ -43,13 +50,6 @@ public class ArchiveLine {
 	
 	public int getCol() {
 		return this.colIndex;
-	}
-	
-	public String toLine() {
-		return this.animal.getRank() + separator 
-				+ this.animal.getSide() + separator 
-				+ rowIndex + separator 
-				+ colIndex;
 	}
 	
 	public static String MakeLine(Box box) {
@@ -71,7 +71,7 @@ public class ArchiveLine {
 	}
 	
 	/**
-	 * For testing
+	 * None texture version for testing
 	 */
 	public static ArchiveLine ParseLineForTesting(String line) {
 		String[] inputs = line.split(separator);
