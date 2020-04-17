@@ -14,6 +14,6 @@ public class StartButton extends Button {
 	public void onClick() {
 		//TODO: Start a new game
 		//How: Change the current loop in CoreLoop to a new NormalLoop;
+		CoreLoop.setLoop(new NormalLoop());
 	}
-
 }
