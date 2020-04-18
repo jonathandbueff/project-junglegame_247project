@@ -12,9 +12,13 @@ public class GameController {
 	private Box current;
 	private Box target;
 	private int turn;  //0 for player1 and 1 for player2
+	private AnimalTracker[] trackers;
 
 	public GameController(GameBoard board) {
 		this.board = board.getBoxes();
+		this.trackers = new AnimalTracker[2];
+		this.trackers[0] = new AnimalTracker();
+		this.trackers[1] = new AnimalTracker();
 	}
 	
 	public List<Box> getPossibleMoves(Box box) {
@@ -50,11 +54,13 @@ public class GameController {
 	}
 	
 	public boolean updateBoard() {
+		if (!target.isEmpty()) {
+			trackers[1-turn].destroy();
+		}
 		target.setAnimal(current.getAnimal());
 		current.setAnimal(Animal.getEmpty());
 		turn = 1 - turn;
-		return (target.getKind() == Landscape.den1 || target.getKind() == Landscape.den2);
-
+		return (target.getKind() == Landscape.den1 || target.getKind() == Landscape.den2 || !trackers[turn].hasAnimalLeft());
 	}
 	
 	public int getTurn() {
