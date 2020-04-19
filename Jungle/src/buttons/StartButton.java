@@ -10,6 +10,10 @@ public class StartButton extends Button {
 		super(position, ButtonType.start);
 	}
 	
+	public StartButton(int xpos, int ypos) {
+		super(xpos,ypos,ButtonType.start);
+	}
+	
 	@Override
 	public void onClick() {
 		//TODO: Start a new game

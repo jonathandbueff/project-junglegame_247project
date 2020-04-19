@@ -1,5 +1,7 @@
 package core;
 
+import ui.BackgroundRenderer;
+
 /**
  * A game loop that manages other loops
  * Only one CoreLoop should be running at all time
@@ -25,6 +27,7 @@ public class CoreLoop implements GameLoop {
 
 	@Override
 	public void update() {
+		BackgroundRenderer.renderBackground();
 		runningLoop.update();
 	}
 	
@@ -34,7 +37,7 @@ public class CoreLoop implements GameLoop {
 	 * @param loop new loop to run
 	 */
 	public static void setLoop(GameLoop loop) {
-		current.runningLoop = loop;
+		current.runningLoop = loop;	
 		current.runningLoop.start();
 	}
 

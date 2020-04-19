@@ -24,13 +24,13 @@ public class MenuLoop implements GameLoop{
 		
 		title = TextureDictionary.getTitle();
 		
-		startButton = new StartButton(new Position(0, 400));
+		startButton = new StartButton(0,450);
 		startButton.centerHorizontally(window.getWidth());
 		
-		reloadButton = new ReloadButton(new Position(0,550));
+		reloadButton = new ReloadButton(0,600);
 		reloadButton.centerHorizontally(window.getWidth());
 		
-		exitButton = new ExitButton(new Position(0,700));
+		exitButton = new ExitButton(0,750);
 		exitButton.centerHorizontally(window.getWidth());
 		
 		int xpos = (window.getWidth() - title.getWidth())/2;

@@ -8,11 +8,9 @@ import static org.lwjgl.opengl.GL11.glVertex2f;
 
 public class BackgroundRenderer {
 	
-	private static Texture background = new Texture("./Textures/background.png");
+	private static Texture background = TextureDictionary.getBackgroundTexture();
 	private static Position pos = new Position(0,0);
 	
-	
-	//Not Completed
 	public static void renderBackground() {
 		
 		RelativePosition topLeft = RelativePosition.globalToRelative(pos);
