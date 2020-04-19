@@ -9,6 +9,10 @@ public class ExitButton extends Button {
 		super(position, ButtonType.exit);
 	}
 	
+	public ExitButton(int xpos, int ypos) {
+		super(xpos,ypos,ButtonType.exit);
+	}
+	
 	@Override
 	public void onClick() {
 		WindowController.closeCurrentWindow();

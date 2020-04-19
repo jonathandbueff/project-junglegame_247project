@@ -4,5 +4,7 @@ public enum ButtonType {
 	start,
 	reload,
 	exit,
-	save
+	save,
+	restart,
+	back
 }

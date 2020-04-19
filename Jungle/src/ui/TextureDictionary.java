@@ -7,16 +7,15 @@ public class TextureDictionary {
 	
 	private static String DirPath = "./Textures/";
 	
-	private static Texture availableMarker = new Texture(DirPath+"available1.png");
-	
-	
+	private static Texture availableMarker = new Texture(DirPath+"boxes/available.png");
+		
 	public static Texture getTitle() {
 		return new Texture(DirPath+"title.png");
 	}
 
 	
 	public static Texture getBoxTexture(Landscape landscape) {
-		String url = DirPath;
+		String url = DirPath + "boxes/";
 		switch(landscape) {
 			case land:
 				url+="empty.png";
@@ -43,7 +42,7 @@ public class TextureDictionary {
 	public static Texture getAnimalTexture(Rank animalRank, int side) {	
 		if(animalRank == Rank.empty) return null;
 		
-		String url = DirPath;
+		String url = DirPath + "animals/";
 		int sourceLabel = side+1;
 		url += animalRank;
 		url += sourceLabel + ".png";
@@ -55,9 +54,25 @@ public class TextureDictionary {
 	}
 	
 	public static Texture getButtonTexture(ButtonType type) {
-		String url = DirPath;
+		String url = DirPath + "buttons/";
 		url+= type+"button.png";
 		return new Texture(url);
+	}
+	
+	public static Texture getBackgroundTexture() {
+		return new Texture(DirPath + "background.png");
+	}
+	
+	public static Texture getTurnTexture(int turn) {
+		
+		switch(turn) {
+			case 0:
+				return new Texture(DirPath+"turn1.png");
+			case 1:
+				return new Texture(DirPath+"turn2.png");				
+			default:
+				return null;
+		}
 	}
 
 }

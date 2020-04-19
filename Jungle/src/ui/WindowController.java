@@ -75,8 +75,8 @@ public class WindowController {
 			
 			loop.update();
 			
-			glfwPollEvents();
 			glfwSwapBuffers(winId);
+			glfwPollEvents();			
 		}
 		
 		glfwTerminate();
@@ -97,4 +97,5 @@ public class WindowController {
 	public static void closeCurrentWindow() {
 		glfwSetWindowShouldClose(getCurrentWindowId(), true);
 	}
+	
 }

@@ -25,6 +25,11 @@ public class Button implements Clickable {
 		height = texture.getHeight();
 	}
 	
+	public Button(int xpos, int ypos, ButtonType type) {
+		this(new Position(xpos,ypos), type);
+	}
+	
+	
 	public boolean isClick(Position clickPosition) {
 		
 		Position bottomRight = position.add(width, height);
@@ -45,6 +50,10 @@ public class Button implements Clickable {
 	
 	public void render() {
 		texture.renderAt(position);
+	}
+	
+	public ButtonType getType() {
+		return type;
 	}
 	
 	public int getWidth() {

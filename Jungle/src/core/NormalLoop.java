@@ -1,6 +1,7 @@
 package core;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import archive.ArchiveManager;
@@ -11,6 +12,7 @@ import buttons.*;
 import ui.BoardRenderer;
 import ui.Mouse;
 import ui.Position;
+import ui.TurnIndicator;
 import ui.WindowController;
 
 /**
@@ -28,7 +30,10 @@ public class NormalLoop implements GameLoop {
 	protected GameState state;
 	protected GameController controller;
 	
-	protected Button saveButton;
+	protected Collection<Button> buttons;
+	protected final int numButtons = 3;
+	
+	protected TurnIndicator indicator;
 	
 	protected enum GameState {
 		select,
@@ -38,11 +43,22 @@ public class NormalLoop implements GameLoop {
 
 	@Override
 	public void start() {
-		board = GameBoard.createBoardDefault(new Position(80,35));		
+		//game board
+		board = getBoard(new Position(80,35));		
 		windowId = WindowController.getCurrentWindowId();	
 		state = GameState.select;
 		controller = new GameController(board);
-		saveButton = new SaveButton(new Position(1200,600));
+		
+		//UI
+		buttons = new ArrayList<Button>(numButtons);
+		Button restartButton = new RestartButton(1220,550);
+		Button saveButton = new SaveButton(1220,650);
+		Button backButton = new BackButton(1220,750);
+		buttons.add(restartButton);
+		buttons.add(saveButton);
+		buttons.add(backButton);
+		
+		indicator = new TurnIndicator(1200,100);
 	}
 
 	@Override
@@ -108,6 +124,10 @@ public class NormalLoop implements GameLoop {
 		}
 		
 	}
+	
+	protected GameBoard getBoard(Position position) {
+		return  GameBoard.createBoardDefault(position);
+	}
 
 	private void markAvailableBoxes(Box clickedBox) {
 		Collection<Box> moves = controller.getPossibleMoves(clickedBox);
@@ -117,13 +137,21 @@ public class NormalLoop implements GameLoop {
 	}
 	
 	private void renderUI() {
-		saveButton.render();
+		for(Button button : buttons) {
+			button.render();
+		}
+		indicator.Render(controller.getTurn());
 	}
 	
 	private void checkButtonsClicked(Position clickPosition) {
-		if(saveButton.isClick(clickPosition)) {
-			ArchiveManager.saveBoard(board, controller.getTurn());
-			saveButton.onClick();
+		for(Button button : buttons) {
+			if(button.isClick(clickPosition)) {
+				if(button.getType() == ButtonType.save) {
+					ArchiveManager.saveBoard(board, controller.getTurn());
+				}
+				button.onClick();
+				break; //prevent clicking two buttons at the same time
+			}
 		}
 	}
 	
