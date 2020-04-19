@@ -19,7 +19,7 @@ public class GameBoard {
 	private Box[][] board;
 	
 	public GameBoard(Position pos) {
-		position = pos;
+		position = pos.scaled();
 		board = new Box[NumRow][NumCol];	
 		for (int i = 0; i < board.length; i++) {
 			for (int j = 0; j < board[i].length; j++) {
@@ -103,7 +103,7 @@ public class GameBoard {
 	 * @return if the input position is inside the game board
 	 */
 	public boolean isInBoard(Position pos) {
-		Position bottomRight = position.add(new Position(NumCol*Box.Length, NumRow*Box.Length));
+		Position bottomRight = position.add(new Position(NumCol*Box.LengthScaled, NumRow*Box.LengthScaled));
 		boolean isWidthInRange = pos.isFurther(position) && (!pos.isFurther(bottomRight));
 		boolean isHeightInRange = (!pos.isHigher(position)) && pos.isHigher(bottomRight);
 		return isWidthInRange && isHeightInRange;
@@ -116,8 +116,8 @@ public class GameBoard {
 	 * @return a box
 	 */
 	public Box getBox(Position pos) {
-		int rowIndex = (pos.getY() - position.getY())/Box.Length;
-		int colIndex = (pos.getX() - position.getX())/Box.Length;
+		int rowIndex = (pos.getY() - position.getY())/Box.LengthScaled;
+		int colIndex = (pos.getX() - position.getX())/Box.LengthScaled;
 		try {
 			return board[rowIndex][colIndex];
 		}

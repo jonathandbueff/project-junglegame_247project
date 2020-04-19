@@ -7,7 +7,6 @@ public class MonitorInfo {
 	
 	static GLFWVidMode videoMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 	
-	//TODO
 	public static int WIDTH = videoMode.width();
 	public static int HEIGHT = videoMode.height();
 	

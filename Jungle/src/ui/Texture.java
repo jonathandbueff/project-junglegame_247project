@@ -16,6 +16,8 @@ public class Texture {
 	private int id;
 	private int width;
 	private int height;
+	private int widthScaled;
+	private int heightScaled;
 	
 	private final int colorLength = 4;  //color is 4 bytes
 	
@@ -37,6 +39,8 @@ public class Texture {
 			
 			setPixelsToImage(pixels);
 			
+			widthScaled = WindowController.scale(width);
+			heightScaled = WindowController.scale(height);
 		}
 		catch(IOException e) {
 			throw new IllegalStateException("File at " + fileName + " does not exist");
@@ -48,8 +52,10 @@ public class Texture {
 	}
 	
 	public void renderAt(Position pos) {
+
 		RelativePosition topLeft = RelativePosition.globalToRelative(pos);
-		RelativePosition bottomRight = RelativePosition.globalToRelative(pos.add(new Position(width,height)));
+		RelativePosition bottomRight 
+			= RelativePosition.globalToRelative(pos.add(widthScaled,heightScaled));
 
 		bind();
 		glBegin(GL_QUADS);
@@ -65,11 +71,11 @@ public class Texture {
 	}
 	
 	public int getWidth() {
-		return width;
+		return widthScaled;
 	}
 	
 	public int getHeight() {
-		return height;
+		return heightScaled;
 	}
 	
 	

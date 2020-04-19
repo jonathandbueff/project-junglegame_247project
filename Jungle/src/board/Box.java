@@ -6,6 +6,7 @@ import board.Enumerations.Rank;
 import ui.Position;
 import ui.Texture;
 import ui.TextureDictionary;
+import ui.WindowController;
 
 public class Box {
 	private Landscape landscape; // land, water, trap, den
@@ -13,6 +14,7 @@ public class Box {
 	
 	private Position position;
 	public static int Length = 120;
+	public static int LengthScaled = 120;
 	private int x;
 	private int y;
 
@@ -29,8 +31,9 @@ public class Box {
 	
 	public Box(Landscape scape, Position pos) {
 		this.landscape = scape;
-		this.position = pos;
+		this.position = pos.scaled();
 		texture = TextureDictionary.getBoxTexture(scape);
+		LengthScaled = WindowController.scale(Length);
 	}
 	
 	public void render() {

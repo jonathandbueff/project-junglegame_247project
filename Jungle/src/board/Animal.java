@@ -43,8 +43,8 @@ public class Animal {
 	public Position centerTo(Position boxPosition) {
 		int width = texture.getWidth();
 		int height = texture.getHeight();
-		int widthCenter = (Box.Length - width)/2;
-		int heightCenter = (Box.Length - height)/2;
+		int widthCenter = (Box.LengthScaled - width)/2;
+		int heightCenter = (Box.LengthScaled - height)/2;
 		return boxPosition.add(widthCenter, heightCenter);
 	}
 	

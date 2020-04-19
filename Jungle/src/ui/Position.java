@@ -14,6 +14,10 @@ public class Position {
 		y = (int)ypos;
 	}
 	
+	public Position scaled() {
+		return new Position(WindowController.scale(x), WindowController.scale(y));
+	}
+	
 	/**
 	 * 
 	 * @param other position

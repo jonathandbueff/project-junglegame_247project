@@ -9,7 +9,7 @@ public class Window {
 	public Window(long id, int width, int height) {
 		this.id = id;
 		this.width = width;
-		this.height = height;		
+		this.height = height;
 	}
 	
 	public long getID() {
@@ -24,5 +24,4 @@ public class Window {
 		return this.width;
 	}
 		
-	
 }
