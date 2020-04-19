@@ -2,10 +2,12 @@ package ui;
 
 import board.Enumerations.*;
 import buttons.ButtonType;
+import utils.SystemTypeChecker;
+import utils.SystemTypeChecker.SystemType;
 
 public class TextureDictionary {
 	
-	private static String DirPath = "./Textures/";
+	private static String DirPath = getPathWithSystem();
 	
 	private static Texture availableMarker = new Texture(DirPath+"boxes/available.png");
 		
@@ -73,6 +75,13 @@ public class TextureDictionary {
 			default:
 				return null;
 		}
+	}
+	
+	private static String getPathWithSystem() {
+		if(SystemTypeChecker.getType() == SystemType.Mac) {
+			return "Textures/";
+		}
+		return "./Textures/";
 	}
 
 }

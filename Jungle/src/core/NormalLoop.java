@@ -1,6 +1,5 @@
 package core;
 
-
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -91,6 +90,7 @@ public class NormalLoop implements GameLoop {
 					
 					Position clickPosition = Mouse.getMousePosition(windowId);
 					board.markAllAsUnavailable();
+					checkButtonsClicked(clickPosition);
 					
 					if(board.isInBoard(clickPosition)) {
 						Box clickedBox = board.getBox(clickPosition);
@@ -105,6 +105,7 @@ public class NormalLoop implements GameLoop {
 							controller.moveTo(clickedBox);
 							state = GameState.update;
 						}
+						
 					}
 				}
 				break;

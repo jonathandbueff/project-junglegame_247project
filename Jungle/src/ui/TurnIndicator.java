@@ -9,7 +9,7 @@ public class TurnIndicator {
 	public TurnIndicator(int xpos, int ypos) {
 		indicatorForP1 = TextureDictionary.getTurnTexture(0);
 		indicatorForP2 = TextureDictionary.getTurnTexture(1);
-		this.position = new Position(xpos,ypos);
+		this.position = new Position(xpos,ypos).scaled();
 	}
 	
 	public void Render(int turn) {

@@ -17,7 +17,7 @@ public class Button implements Clickable {
 	
 	
 	public Button(Position position, ButtonType type) {
-		this.position = position;
+		this.position = position.scaled();
 		this.type = type;
 		
 		texture = TextureDictionary.getButtonTexture(type);
