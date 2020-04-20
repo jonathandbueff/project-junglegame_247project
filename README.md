@@ -18,7 +18,7 @@ https://gitforwindows.org/
 
 git clone https://github.com/wustlcse237sp20/project-junglegame_247project.git \
 cd project-junglegame_247project/Jungle \
-java -XstartOnFirstThread -jar Jungle.jar
+java -XstartOnFirstThread -Djava.awt.headless=true -jar Jungle.jar
 
 ### User Stories:
 User Story (Iteration 1):
