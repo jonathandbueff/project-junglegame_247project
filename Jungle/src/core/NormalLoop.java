@@ -37,7 +37,8 @@ public class NormalLoop implements GameLoop {
 	protected enum GameState {
 		select,
 		move,
-		update
+		update,
+		finished,
 	}
 
 	@Override
@@ -112,16 +113,22 @@ public class NormalLoop implements GameLoop {
 			
 			case update:
 				board.markAllAsUnavailable();
-				if (controller.updateBoard()) {
-					// win
-					//currently just reset
-					this.start();
+				if (controller.updateBoard()) { // win					
+					controller.finish();
+					state = GameState.finished;
 				}
 				else {
 					state = GameState.select;
 				}
 				break;
 			
+			case finished:
+				if(Mouse.isClick(windowId)) {
+					Position clickPosition = Mouse.getMousePosition(windowId);
+					board.markAllAsUnavailable();
+					checkButtonsClicked(clickPosition);
+				}
+				break;
 		}
 		
 	}
@@ -141,14 +148,23 @@ public class NormalLoop implements GameLoop {
 		for(Button button : buttons) {
 			button.render();
 		}
-		indicator.Render(controller.getTurn());
+		if(controller.isFinished()) {
+			indicator.RenderVictory(1-controller.getTurn());
+		}
+		else{
+			indicator.Render(controller.getTurn());
+		}
 	}
 	
 	private void checkButtonsClicked(Position clickPosition) {
 		for(Button button : buttons) {
 			if(button.isClick(clickPosition)) {
 				if(button.getType() == ButtonType.save) {
-					ArchiveManager.saveBoard(board, controller.getTurn());
+					if(!controller.isFinished()) {
+						ArchiveManager.saveBoard(board, controller.getTurn());
+						button.onClick();
+						break;
+					}					
 				}
 				button.onClick();
 				break; //prevent clicking two buttons at the same time

@@ -13,12 +13,15 @@ public class GameController {
 	private Box target;
 	private int turn;  //0 for player1 and 1 for player2
 	private AnimalTracker[] trackers;
+	
+	private boolean isFinished;
 
 	public GameController(GameBoard board) {
 		this.board = board.getBoxes();
 		this.trackers = new AnimalTracker[2];
 		this.trackers[0] = new AnimalTracker();
 		this.trackers[1] = new AnimalTracker();
+		isFinished = false;
 	}
 	
 	public List<Box> getPossibleMoves(Box box) {
@@ -71,6 +74,14 @@ public class GameController {
 		if(turn == 0 || turn == 1) {
 			this.turn = turn;
 		}
+	}
+	
+	public void finish() {
+		isFinished = true;
+	}
+	
+	public boolean isFinished() {
+		return isFinished;
 	}
 	
 	

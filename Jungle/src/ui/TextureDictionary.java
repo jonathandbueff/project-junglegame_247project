@@ -69,12 +69,23 @@ public class TextureDictionary {
 		
 		switch(turn) {
 			case 0:
-				return new Texture(DirPath+"turn1.png");
+				return new Texture(DirPath+"indicators/turn1.png");
 			case 1:
-				return new Texture(DirPath+"turn2.png");				
+				return new Texture(DirPath+"indicators/turn2.png");				
 			default:
 				return null;
 		}
+	}
+	
+	public static Texture getWinTexture(int turn) {
+		switch(turn) {
+			case 0:
+				return new Texture(DirPath+"indicators/win1.png");
+			case 1:
+				return new Texture(DirPath+"indicators/win2.png");				
+			default:
+				return null;
+		}	
 	}
 	
 	private static String getPathWithSystem() {
