@@ -2,8 +2,6 @@ package core;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
-import archive.ArchiveManager;
 import board.Box;
 import board.GameBoard;
 import board.GameController;
@@ -159,13 +157,7 @@ public class NormalLoop implements GameLoop {
 	private void checkButtonsClicked(Position clickPosition) {
 		for(Button button : buttons) {
 			if(button.isClick(clickPosition)) {
-				if(button.getType() == ButtonType.save) {
-					if(!controller.isFinished()) {
-						ArchiveManager.saveBoard(board, controller.getTurn());
-						button.onClick();
-						break;
-					}					
-				}
+				button.onClick(board, controller);
 				button.onClick();
 				break; //prevent clicking two buttons at the same time
 			}

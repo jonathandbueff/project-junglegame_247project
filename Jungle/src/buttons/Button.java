@@ -1,5 +1,7 @@
 package buttons;
 
+import board.GameBoard;
+import board.GameController;
 import ui.Clickable;
 import ui.Position;
 import ui.Texture;
@@ -44,6 +46,11 @@ public class Button implements Clickable {
 
 	@Override
 	public void onClick() {
+		//Left blank intentionally
+		//To be overridden with derived classes
+	}
+	
+	public void onClick(GameBoard board, GameController controller) {
 		//Left blank intentionally
 		//To be overridden with derived classes
 	}
