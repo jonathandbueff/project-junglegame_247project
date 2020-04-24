@@ -152,4 +152,8 @@ public class GameBoard {
 			}		
 		}
 	}
+	
+	public void setAnimal(Position position, Animal animal) {
+		getBox(position).setAnimal(animal);
+	}
 }
