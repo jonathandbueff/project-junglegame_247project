@@ -152,4 +152,16 @@ public class GameBoard {
 			}		
 		}
 	}
+	
+	public int[] countNumbers() {
+		int[] ans = new int[2];
+		for (Box[] boxes : board) {
+			for (Box box : boxes) {
+				if (!box.isEmpty()) {
+					ans[box.getAnimal().getSide()]++;
+				}
+			}
+		}
+		return ans;
+	}
 }

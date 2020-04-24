@@ -2,9 +2,11 @@ package board;
 
 public class AnimalTracker {
 	private int num;
+	private int side;
 	
-	public AnimalTracker() {
-		num = 8;
+	public AnimalTracker(int n, int s) {
+		num = n;
+		side = s;
 	}
 	
 	public boolean hasAnimalLeft() {

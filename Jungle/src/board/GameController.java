@@ -16,11 +16,12 @@ public class GameController {
 	
 	private boolean isFinished;
 
-	public GameController(GameBoard board) {
-		this.board = board.getBoxes();
+	public GameController(GameBoard b) {
+		this.board = b.getBoxes();
 		this.trackers = new AnimalTracker[2];
-		this.trackers[0] = new AnimalTracker();
-		this.trackers[1] = new AnimalTracker();
+		int[] numberOfAnimals = b.countNumbers();
+		this.trackers[0] = new AnimalTracker(numberOfAnimals[0], 0);
+		this.trackers[1] = new AnimalTracker(numberOfAnimals[1], 1);
 		isFinished = false;
 	}
 	
