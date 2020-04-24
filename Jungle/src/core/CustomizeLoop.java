@@ -6,6 +6,7 @@ import java.util.Collection;
 
 import board.Animal;
 import board.Box;
+import board.Enumerations.Landscape;
 import board.Enumerations.Rank;
 import board.GameBoard;
 import buttons.*;
@@ -54,8 +55,9 @@ public class CustomizeLoop implements GameLoop {
 		switch(state) {
 		
 		case select:
-			if (index >= ranks.length * 2) {
+			if (index >= 16) {
 				state = CustomizeState.finished;
+				break;
 			}
 			if(Mouse.isClick(windowId)) {
 				
@@ -74,7 +76,10 @@ public class CustomizeLoop implements GameLoop {
 			}
 			
 		case finished:
-			// how to break this loop?
+			if (Mouse.isClick(windowId)) {
+				Position clickPosition = Mouse.getMousePosition(windowId);
+				checkButtonsClicked(clickPosition);
+			}
 		}
 	}
 	
@@ -85,6 +90,9 @@ public class CustomizeLoop implements GameLoop {
 	private void checkButtonsClicked(Position clickPosition) {
 		for(Button button : buttons) {
 			if(button.isClick(clickPosition)) {
+				if (button.getType() == ButtonType.finish) {
+					if (state == CustomizeState.select) return;
+				}
 				button.onClick(board, null);
 				button.onClick();
 				break; //prevent clicking two buttons at the same time
@@ -99,7 +107,7 @@ public class CustomizeLoop implements GameLoop {
 	}
 	
 	private boolean canSelect(Box box, int side) {
-		if (!box.isEmpty()) return false;
+		if (!box.isEmpty() || box.getKind() != Landscape.land) return false;
 		if (side == 0) {
 			return box.getY() <= 2;
 		}
