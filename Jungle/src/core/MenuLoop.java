@@ -1,17 +1,19 @@
 package core;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+
 import buttons.*;
 import ui.*;
 
 public class MenuLoop implements GameLoop{
 	
 	private long windowId;
-	private Window window;
 	
 	//Buttons
-	Button startButton;
-	Button reloadButton;
-	Button exitButton;
+	private Collection<Button> buttons;
+	private final int numButtons = 4;
 	
 	private Texture title;
 	private Position topCenter;
@@ -20,21 +22,25 @@ public class MenuLoop implements GameLoop{
 	public void start() {
 		
 		windowId = WindowController.getCurrentWindowId();
-		window = WindowController.getCurrentWindow();
+		int winWidth = WindowController.getCurrentWindowWidth();
+		int winHeight = WindowController.getCurrentWindowHeight();
 		
 		title = TextureDictionary.getTitle();
 		
-		startButton = new StartButton(0,450);
-		startButton.centerHorizontally(window.getWidth());
+		//buttons
+		buttons = new ArrayList<>(numButtons);		
+		Button startButton = new StartButton(0,400);		
+		Button reloadButton = new ReloadButton(0,520);	
+		Button customizeButton = new CustomizeButton(0,640);
+		Button exitButton = new ExitButton(0,750);			
+		buttons.addAll(Arrays.asList(startButton, reloadButton, customizeButton, exitButton));	
+		for(Button button : buttons) {
+			button.centerHorizontally(winWidth);
+		}
 		
-		reloadButton = new ReloadButton(0,600);
-		reloadButton.centerHorizontally(window.getWidth());
-		
-		exitButton = new ExitButton(0,750);
-		exitButton.centerHorizontally(window.getWidth());
-		
-		int xpos = (window.getWidth() - title.getWidth())/2;
-		int ypos = (window.getHeight() - title.getHeight())/5;	
+		//title
+		int xpos = (winWidth - title.getWidth())/2;
+		int ypos = (winHeight - title.getHeight())/6;	
 		topCenter = new Position(xpos,ypos);
 		
 	}
@@ -44,18 +50,18 @@ public class MenuLoop implements GameLoop{
 		render();
 		
 		if(Mouse.isClick(windowId)) {
-			tryClick(startButton);
-			tryClick(reloadButton);
-			tryClick(exitButton);
+			for(Button button : buttons) {
+				tryClick(button);
+			}
 		}
 		
 	}
 	
 	private void render() {
 		title.renderAt(topCenter);
-		startButton.render();
-		reloadButton.render();
-		exitButton.render();
+		for(Button button : buttons) {
+			button.render();
+		}
 	}
 	
 	private void tryClick(Button button) {

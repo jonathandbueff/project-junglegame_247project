@@ -1,6 +1,7 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 import board.Animal;
@@ -33,7 +34,6 @@ public class CustomizeLoop implements GameLoop {
 	
 	@Override
 	public void start() {
-		// TODO Auto-generated method stub
 		state = CustomizeState.select;
 		ranks = Rank.values();
 		board = new GameBoard(new Position(80, 35));
@@ -41,17 +41,13 @@ public class CustomizeLoop implements GameLoop {
 		
 		//UI
 		buttons = new ArrayList<Button>(numButtons);
-		Button restartButton = new RestartButton(1220,550);
-		Button saveButton = new SaveButton(1220,650);
+		Button finishButton = new FinishButton(1220,600);	
 		Button backButton = new BackButton(1220,750);
-		buttons.add(restartButton);
-		buttons.add(saveButton);
-		buttons.add(backButton);
+		buttons.addAll(Arrays.asList(finishButton, backButton));
 	}
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
 		BoardRenderer.renderBoard(board);
 		renderUI();
 		
@@ -64,7 +60,7 @@ public class CustomizeLoop implements GameLoop {
 			if(Mouse.isClick(windowId)) {
 				
 				Position clickPosition = Mouse.getMousePosition(windowId);
-				//checkButtonsClicked(clickPosition);
+				checkButtonsClicked(clickPosition);
 				
 				if(board.isInBoard(clickPosition)) {
 					Box clickedBox = board.getBox(clickPosition);
@@ -84,6 +80,16 @@ public class CustomizeLoop implements GameLoop {
 	
 	public GameBoard getBoard() {
 		return board;
+	}
+	
+	private void checkButtonsClicked(Position clickPosition) {
+		for(Button button : buttons) {
+			if(button.isClick(clickPosition)) {
+				button.onClick(board, null);
+				button.onClick();
+				break; //prevent clicking two buttons at the same time
+			}
+		}
 	}
 	
 	private void renderUI() {

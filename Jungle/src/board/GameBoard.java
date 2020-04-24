@@ -156,4 +156,16 @@ public class GameBoard {
 	public void setAnimal(Position position, Animal animal) {
 		getBox(position).setAnimal(animal);
 	}
+	
+	public GameBoard copy() {
+		GameBoard copy = new GameBoard(position);
+		for(Box[] row : board) {
+			for(Box box : row) {
+				if(box.isPresent()) {
+					copy.board[box.getX()][box.getY()].setAnimal(box.getAnimal());
+				}
+			}
+		}
+		return copy;
+	}
 }
