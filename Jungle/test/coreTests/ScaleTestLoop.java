@@ -1,6 +1,5 @@
 package coreTests;
 
-import board.Box;
 import board.Enumerations.Rank;
 import core.GameLoop;
 import ui.Position;
