@@ -20,8 +20,8 @@ public class GameController {
 		this.board = b.getBoxes();
 		this.trackers = new AnimalTracker[2];
 		int[] numberOfAnimals = b.countNumbers();
-		this.trackers[0] = new AnimalTracker(numberOfAnimals[0], 0);
-		this.trackers[1] = new AnimalTracker(numberOfAnimals[1], 1);
+		this.trackers[0] = new AnimalTracker(numberOfAnimals[0]);
+		this.trackers[1] = new AnimalTracker(numberOfAnimals[1]);
 		isFinished = false;
 	}
 	
