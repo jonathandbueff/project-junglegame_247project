@@ -16,7 +16,7 @@ class CoreLoopTest {
 	@Test
 	void testRun() {
 		TestLoop test = new TestLoop();
-		CoreLoop.current.setLoop(test);
+		CoreLoop.setLoop(test);
 		Assert.assertTrue(test.initilized);
 		CoreLoop.current.update();
 		Assert.assertTrue(test.updating);

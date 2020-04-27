@@ -5,7 +5,6 @@ import ui.Mouse;
 import ui.Position;
 import ui.Window;
 import ui.WindowController;
-import static org.lwjgl.glfw.GLFW.*;
 
 public class ClickTestLoop implements GameLoop {
 	

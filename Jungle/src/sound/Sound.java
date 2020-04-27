@@ -1,6 +1,5 @@
 package sound;
 
-import ui.Texture;
 import utils.SystemTypeChecker;
 
 import javax.sound.sampled.AudioInputStream;
@@ -10,39 +9,29 @@ import java.io.File;
 
 public class Sound {
     private static String DirPath = getPathWithSystem();
-
-    public Sound(){
-        String originalPath = DirPath + "normal.wav";
-        File sound = new File(originalPath);
-
-        try {
-            AudioInputStream ais = AudioSystem.getAudioInputStream(sound);
-            Clip audioClip = AudioSystem.getClip();
-            audioClip.open(ais); // Clip opens AudioInputStream
-            audioClip.start(); // Start playing audio
-            audioClip.loop(Clip.LOOP_CONTINUOUSLY);
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+    private static String DefaultFile = "normal.wav";
+    
+    public static void PlayDefault() {
+    	Play(DefaultFile);
     }
+    
+    public static void Play(String fileName) {
+    	 String originalPath = DirPath + fileName;
+         File sound = new File(originalPath);
 
-    public void changeSong(String soundPath){
-        File sound = new File(soundPath);
+         try {
+             AudioInputStream ais = AudioSystem.getAudioInputStream(sound);
+             Clip audioClip = AudioSystem.getClip();
+             if(audioClip.isOpen()) {
+            	 audioClip.close();
+             }
+             audioClip.open(ais); // Clip opens AudioInputStream
+             audioClip.start(); // Start playing audio
+             audioClip.loop(Clip.LOOP_CONTINUOUSLY);
 
-        try {
-            Clip audioClip = AudioSystem.getClip();
-            audioClip.close();
-            AudioInputStream ais = AudioSystem.getAudioInputStream(sound);
-            Clip newAudioClip = AudioSystem.getClip();
-            audioClip.open(ais); // Clip opens AudioInputStream
-            audioClip.start(); // Start playing audio
-
-        } catch (Exception e) {
-
-            System.out.println(e.getMessage());
-        }
-
+         } catch (Exception e) {
+             System.out.println(e.getMessage());
+         }
     }
 
     private static String getPathWithSystem() {
@@ -51,8 +40,5 @@ public class Sound {
         }
         return "./Tracks/";
     }
-
-
-
 
 }
