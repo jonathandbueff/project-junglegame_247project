@@ -8,5 +8,8 @@ public enum ButtonType {
 	restart,
 	back,
 	customize,
-	finish
+	finish,
+	rule,
+	next,
+	ret,
 }

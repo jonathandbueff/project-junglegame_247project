@@ -1,5 +1,8 @@
 package ui;
 
+import java.util.Arrays;
+import java.util.List;
+
 import board.Enumerations.*;
 import buttons.ButtonType;
 import utils.SystemTypeChecker;
@@ -86,6 +89,16 @@ public class TextureDictionary {
 			default:
 				return null;
 		}	
+	}
+	
+	public static List<Texture> getRulesTextures(){
+		return Arrays.asList(
+				new Texture(DirPath+"help/names.png"),
+				new Texture(DirPath+"help/rules1.png"),
+				new Texture(DirPath+"help/rules2.png"),
+				new Texture(DirPath+"help/rules3.png"),
+				new Texture(DirPath+"help/rules4.png")
+				);
 	}
 	
 	private static String getPathWithSystem() {
