@@ -6,5 +6,7 @@ public enum ButtonType {
 	exit,
 	save,
 	restart,
-	back
+	back,
+	customize,
+	finish
 }
