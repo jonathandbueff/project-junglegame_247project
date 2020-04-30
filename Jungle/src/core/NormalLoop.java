@@ -52,9 +52,11 @@ public class NormalLoop implements GameLoop {
 		Button restartButton = new RestartButton(1220,550);
 		Button saveButton = new SaveButton(1220,650);
 		Button backButton = new BackButton(1220,750);
+		Button rulesButton = new RuleButton(1220,450,this);
 		buttons.add(restartButton);
 		buttons.add(saveButton);
-		buttons.add(backButton);
+		buttons.add(backButton);		
+		buttons.add(rulesButton);
 		
 		indicator = new TurnIndicator(1200,100);
 	}
