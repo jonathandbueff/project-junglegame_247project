@@ -13,6 +13,7 @@ import buttons.*;
 import ui.BoardRenderer;
 import ui.Mouse;
 import ui.Position;
+import ui.TurnIndicator;
 import ui.WindowController;
 
 public class CustomizeLoop implements GameLoop {
@@ -25,7 +26,10 @@ public class CustomizeLoop implements GameLoop {
 	protected long windowId;
 	
 	protected Collection<Button> buttons;
+	protected TurnIndicator indicator;
 	protected final int numButtons = 3;
+	
+	protected Animal current;
 	
 	protected enum CustomizeState {
 		select,
@@ -45,6 +49,8 @@ public class CustomizeLoop implements GameLoop {
 		Button finishButton = new FinishButton(1220,600);	
 		Button backButton = new BackButton(1220,750);
 		buttons.addAll(Arrays.asList(finishButton, backButton));
+		indicator = new TurnIndicator(1200,100);
+		current = new Animal(ranks[index/2], side);
 	}
 
 	@Override
@@ -70,6 +76,7 @@ public class CustomizeLoop implements GameLoop {
 						clickedBox.setAnimal(new Animal(ranks[index/2], side));
 						index++;
 						side = 1 - side;
+						current = new Animal(ranks[index/2], side);
 						break;
 					}
 				}
@@ -103,6 +110,10 @@ public class CustomizeLoop implements GameLoop {
 	private void renderUI() {
 		for (Button button : buttons) {
 			button.render();
+		}
+		indicator.Render(index % 2);
+		if (index < 16) {
+			current.renderAt(new Position(1200, 300));
 		}
 	}
 	
