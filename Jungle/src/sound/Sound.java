@@ -28,7 +28,8 @@ public class Sound {
              audioClip.open(ais); // Clip opens AudioInputStream
              audioClip.start(); // Start playing audio
              audioClip.loop(Clip.LOOP_CONTINUOUSLY);
-
+             audioClip.stop();
+             
          } catch (Exception e) {
              System.out.println(e.getMessage());
          }
