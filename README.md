@@ -32,8 +32,8 @@ User Story (Iteration 2): \
   A start menu will first show up on the screen, where users can start a new game, reload a saved game, or exit the game. When playing the game, users can restart a new game, save the game (and reload thereafter), or go back to the start menu. Above these buttons shows it's which player's turn to move. When one player enters the opponent's den, or loses all the pieces, the game ends, and a new game starts automatically.
 
 User Story (Iteration 3): \
-  Users can choose what to do when a game has ended. Users have the ability to customize a game board. Users can go to a menu that explains the rules in detail. The pieces and buttons will look better.
-  
+  Users are able to customize a game board. They can put their pieces as they like in front of the river, but not in traps or dens. Users can find pages that explain the rules. There is a background music.
+
 ### Current Issues:
   Performance not garanteed on Mac machines. \
   Some Junit tests do not run due to UI related objects. Please ignore tests marked as abandoned or exit with a grey error that says "no current context".
