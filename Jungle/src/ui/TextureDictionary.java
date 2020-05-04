@@ -1,5 +1,8 @@
 package ui;
 
+import java.util.Arrays;
+import java.util.List;
+
 import board.Enumerations.*;
 import buttons.ButtonType;
 import utils.SystemTypeChecker;
@@ -69,12 +72,33 @@ public class TextureDictionary {
 		
 		switch(turn) {
 			case 0:
-				return new Texture(DirPath+"turn1.png");
+				return new Texture(DirPath+"indicators/turn1.png");
 			case 1:
-				return new Texture(DirPath+"turn2.png");				
+				return new Texture(DirPath+"indicators/turn2.png");				
 			default:
 				return null;
 		}
+	}
+	
+	public static Texture getWinTexture(int turn) {
+		switch(turn) {
+			case 0:
+				return new Texture(DirPath+"indicators/win1.png");
+			case 1:
+				return new Texture(DirPath+"indicators/win2.png");				
+			default:
+				return null;
+		}	
+	}
+	
+	public static List<Texture> getRulesTextures(){
+		return Arrays.asList(
+				new Texture(DirPath+"help/names.png"),
+				new Texture(DirPath+"help/rules1.png"),
+				new Texture(DirPath+"help/rules2.png"),
+				new Texture(DirPath+"help/rules3.png"),
+				new Texture(DirPath+"help/rules4.png")
+				);
 	}
 	
 	private static String getPathWithSystem() {

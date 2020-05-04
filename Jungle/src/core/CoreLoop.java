@@ -40,5 +40,13 @@ public class CoreLoop implements GameLoop {
 		current.runningLoop = loop;	
 		current.runningLoop.start();
 	}
+	
+	/**
+	 * return to a loop that is already open
+	 * @param loop an opened loop
+	 */
+	public static void returnToLoop(GameLoop loop) {
+		current.runningLoop = loop;
+	}
 
 }
