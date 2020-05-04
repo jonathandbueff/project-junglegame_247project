@@ -10,6 +10,7 @@ import java.io.File;
 public class Sound {
     private static String DirPath = getPathWithSystem();
     private static String DefaultFile = "normal.wav";
+    private static Clip clip;
     
     public static void PlayDefault() {
     	Play(DefaultFile);
@@ -28,11 +29,15 @@ public class Sound {
              audioClip.open(ais); // Clip opens AudioInputStream
              audioClip.start(); // Start playing audio
              audioClip.loop(Clip.LOOP_CONTINUOUSLY);
-             audioClip.stop();
+             clip = audioClip;
              
          } catch (Exception e) {
              System.out.println(e.getMessage());
          }
+    }
+    
+    public static void Stop() {
+    	clip.stop();
     }
 
     private static String getPathWithSystem() {

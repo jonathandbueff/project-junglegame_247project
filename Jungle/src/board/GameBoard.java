@@ -14,9 +14,9 @@ public class GameBoard {
 	public static final int NumCol = 9;
 	public static final int NumRow = 7;
 	
-    private Position position;   //top left corner
+    protected Position position;   //top left corner
 	
-	private Box[][] board;
+	protected Box[][] board;
 	
 	public GameBoard(Position pos) {
 		position = pos.scaled();
@@ -58,6 +58,9 @@ public class GameBoard {
 			}
 		}
 	}
+	
+	//Only for testing purpose
+	public GameBoard() {};
 	
 	private void initAnimalsDefault() {
 		board[0][2].setAnimal(new Animal(Rank.elephant,0));
