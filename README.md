@@ -38,4 +38,4 @@ User Story (Iteration 3): \
 ### Current Issues:
   Performance not garanteed on Mac machines. \
   Some Junit tests do not run due to UI related objects. Please ignore tests marked as abandoned or exit with a grey error that says "no current context". \
-  Update for Iteration 3: We fix / add some tests in this iteration. There is a new ControllerTest under coreTests, that tests most of the core game logic. However, do note that we test this project mainly through actual playtesting instead of Junit testing, mainly because 1.most classes are UI or user iteraction related and 2.we find it makes sense test a game by playing with it.
+  Update for Iteration 3: We fix / add some tests in this iteration. There is a new ControllerTest under logicTests, that tests most of the core game logic. However, do note that we test this project mainly through actual playtesting instead of Junit testing, mainly because 1.most classes are UI or user iteraction related and 2.we find it makes sense test a game by playing with it.
